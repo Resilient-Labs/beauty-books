@@ -1,9 +1,49 @@
 <div class="container">
-    <h1>Month</h1>
-    <p>Within this container will go the ng-include
-        / ng-switch / ng-switch when code for the four different screens
-    </p>
-    <a href="#/home/week">Week</a>
-    <a href="#/home/month">Month</a>
-    <a href="#/home">YTD</a>
+  <!---
+  <h1>month</h1>
+  <p>Within this container will go the ng-include
+  / ng-switch / ng-switch when code for the four different screens
+</p>
+------>
+<nav class="wmy-tabs">
+    <a href="#/home/week">
+        <button>
+            Week
+        </button>
+    </a>
+    <a href="#/home/month">
+        <button>
+            Month
+        </button>
+    </a>
+    <a href="#/home">
+        <button>
+            YTD
+        </button>
+    </a>
+</nav>
+<div class="month-arrows">
+    <i class="fa fa-sort-asc" aria-hidden="true"></i>
+    <small id="month-arrowup">$5,883</small>
+    <i class="fa fa-sort-desc" aria-hidden="true"></i>
+    <small id="month-arrowdown">$4,391</small>
+</div>
+
+<div class="month-total">
+  <h3>$1,092</h3>
+</div>
+
+<div class="month-graph">Graph Goes Here</div>
+
+<div class="month-deductions">
+  <h3>Deductions</h3>
+  <h3>$0</h3>
+  <small>0 Deductions</small>
+</div>
+
+<div class="month-tax-payment">
+  <h3>Next Tax Payment</h3>
+  <h3>$678</h3>
+  <small>Due September 19, 2017</small>
+  </div>
 </div>
