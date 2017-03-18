@@ -1,0 +1,53 @@
+/* CSS styles for scheduler.html */
+.container.scheduler {
+  margin: 10px auto;
+  max-width: 400px;
+}
+.container.scheduler h1 {
+  text-align: center;
+  background-color: gray;
+  color: white;
+}
+.container.scheduler ul {
+  padding: 0;
+}
+.container.scheduler li {
+  list-style: none;
+}
+.container.scheduler .calendar {
+  /*placeholer*/
+  background-color: gray;
+  height: 15em;
+  text-align: center;
+}
+.container.scheduler button {
+  border: 1px solid gray;
+  color: gray;
+  background-color: inherit;
+  /* (0.50em*+1.2em)*3 about same height as appointment entry*/
+  height: 5.1em !important;
+  /* same width as ".line-subject" width plus padding*/
+  min-width: 4.5em !important;
+  padding: 0;
+  border-radius: 0;
+}
+.container.scheduler .fa.fa-plus {
+  font-size: 3.5em;
+}
+.container.scheduler .entry {
+  border: 1px solid black;
+}
+.container.scheduler .line-subject{
+  background-color: gray;
+  color: white;
+  padding: 0.25em;
+  display: inline-block;
+  min-width: 4em;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .container.scheduler {
+    max-width: 100%;
+  }
+}
