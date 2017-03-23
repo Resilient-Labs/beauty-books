@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container home">
   <!---
   <h1>YTD</h1>
   <p>Within this container will go the ng-include
   / ng-switch / ng-switch when code for the four different screens
 </p>
 ------>
-<nav class="wmy-tabs">
+<div class="wmy-tabs">
     <a href="#/home/week">
         <button>
             Week
@@ -21,29 +21,30 @@
             YTD
         </button>
       </a>
-  </nav>
-  <div class="ytd-arrows">
+  </div>
+  <div class="arrows">
       <i class="fa fa-sort-asc" aria-hidden="true"></i>
       <small id="ytd-arrowup">$9,572</small>
+      <br>
       <i class="fa fa-sort-desc" aria-hidden="true"></i>
       <small id="ytd-arrowdown">$5,371</small>
   </div>
 
-  <div class="ytd-total">
-    <h3>$2,831</h3>
+  <div class="total">
+    <h3 class="total-sum">$2,831</h3>
   </div>
 
-  <div class="ytd-graph">Graph Goes Here</div>
+  <div class="graph">Graph Goes Here</div>
 
-  <div class="ytd-deductions">
-    <h3>Deductions</h3>
-    <h3>$0</h3>
-    <small>0 Deductions</small>
+  <div class="deductions">
+    <h3 class="black-line">Deductions</h3>
+    <h3 class="money">$0</h3>
+    <p>0 Deductions</p>
   </div>
 
-  <div class="ytd-tax-payment">
-    <h3>Next Tax Payment</h3>
-    <h3>$692</h3>
-    <small>Due June 17, 2017</small>
+  <div class="next-tax-payment">
+    <h3 class="black-line">Next Tax Payment</h3>
+    <h3 class="money">$692</h3>
+    <p>Due June 17, 2017</p>
   </div>
 </div>
