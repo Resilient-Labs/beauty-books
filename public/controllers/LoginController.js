@@ -32,10 +32,13 @@
                 $location.url("/home/");
             } else if (loginType == "login-google") {
                 // Login code for Google then route to this location on success
-              // UserService
-              //   .loginWithGoogle
+              UserService
+                .loginWithGoogle(user)
+                .then(function (response) {
+                  console.log(response.data);
+                  $location.url("/home/");
+                });
               // console.log("Login with Google");
-                $location.url("/home/");
             }
         }
     }
