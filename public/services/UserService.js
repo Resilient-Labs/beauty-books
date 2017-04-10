@@ -8,7 +8,10 @@
       // "createUser": createUser,
       "getUser": getUser,
       "updateUser": updateUser,
-      // "deleteUser": deleteUser
+      // "deleteUser": deleteUser,
+      "loginWithFacebook": loginWithFacebook,
+      "loginWithGoogle":loginWithGoogle,
+      "logout":logout
     };
     return api;
 
@@ -20,6 +23,17 @@
     }
     function updateUser(userId, user) {
       return $http.put('/api/user/'+userId, user);
+    }
+    function loginWithFacebook(user) {
+      return $http.post('/login/facebook', user);
+    }
+
+    function loginWithGoogle(user) {
+      return $http.post('/login/google', user);
+    }
+
+    function logout() {
+
     }
     // function deleteUser(userId) {
     //   return $http.delete('/api/user', userId);

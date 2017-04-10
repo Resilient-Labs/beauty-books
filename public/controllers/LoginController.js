@@ -19,30 +19,26 @@
         }
         init();
 
-        function login(e) {
+        function login(e, user) {
             let loginType = e.currentTarget.id;
             if (loginType == "login-facebook") {
                 // Login code for facebook then route to this location on success
                 console.log("Login with Facebook");
+                UserService
+                  .loginWithFacebook()
+                  .then(function (response) {
+                    console.log(response.data);
+                  });
+
                 $location.url("/home/");
             } else if (loginType == "login-google") {
                 // Login code for Google then route to this location on success
-                console.log("Login with Google");
+              UserService
+                .loginWithGoogle
+              console.log("Login with Google");
                 $location.url("/home/");
             }
         }
-
-        function learnMore() {
-            const drawer = document.getElementsByClassName("drawer");
-            // Work In Progress
-            open = !open;
-            if (open) {
-                Velocity(drawer, {translateY: '50%'}, {duration: 500, easing: "easeInOutQuart"});
-            } else {
-                Velocity(drawer, {translateY: '150%'}, {duration: 500, easing: "easeInOutQuart"});
-            }
-        }
-
     }
 
     
