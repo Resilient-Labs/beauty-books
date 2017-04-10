@@ -7,7 +7,7 @@
      * Controls the flow of data for the login view
      * @constructor
      */
-    function LoginController($location) {
+    function LoginController(UserService, $location) {
         let vm = this;
         let open;
         vm.login = login;
