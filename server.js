@@ -7,7 +7,7 @@ const conf = require('./conf.js');
 
 var express = require('express');
 var path = require('path');
-var bodyParser = b
+var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var moment = require('moment');
 var passport = require('passport');
