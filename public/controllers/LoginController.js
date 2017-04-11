@@ -23,13 +23,13 @@
             if (loginType == "login-facebook") {
                 // Login code for facebook then route to this location on success
                 console.log("Login with Facebook");
-                UserService
-                  .loginWithFacebook(user)
-                  .then(function (response) {
-                    console.log(response.data);
-                  });
-
-                $location.url("/home/");
+                // UserService
+                //   .loginWithFacebook(user)
+                //   .then(function (response) {
+                //     console.log(response.data);
+                //   });
+              $window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname + "login/facebook";
+                // $location.url("/home/");
             } else if (loginType == "login-google") {
                 // Login code for Google then route to this location on success
               UserService
