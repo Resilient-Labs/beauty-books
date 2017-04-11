@@ -28,7 +28,12 @@
                 //   .then(function (response) {
                 //     console.log(response.data);
                 //   });
-              console.log($location.protocol() + "//" + $location.host() + $location.path() + $location.port() + "login/facebook");
+              var protocol = $location.protocol();
+              var host = $location.host();
+              host = host.slice(0, host.length - 1);
+              var path = $location.path();
+              var port = $location.port();
+              console.log(protocol + "//" + host + path + ":" + port + "/login/facebook");
               $location.url($location.protocol() + "//" + $location.host() + $location.path() + "login/facebook");
                 // $location.url("/home/");
             } else if (loginType == "login-google") {
