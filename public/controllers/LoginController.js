@@ -30,11 +30,11 @@
                 //   });
               var protocol = $location.protocol();
               var host = $location.host();
-              host = host.slice(0, host.length - 1);
+              // host = host.slice(0, host.length - 1);
               var path = $location.path();
               var port = $location.port();
-              console.log(protocol + "//" + host + path + ":" + port + "/login/facebook");
-              $location.url($location.protocol() + "//" + $location.host() + $location.path() + "login/facebook");
+              console.log(protocol + "//" + host + ":" + port + "/login/facebook");
+              $location.url(protocol + "//" + host + ":" + port + "/login/facebook");
                 // $location.url("/home/");
             } else if (loginType == "login-google") {
                 // Login code for Google then route to this location on success
