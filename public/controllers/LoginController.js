@@ -28,7 +28,8 @@
                 //   .then(function (response) {
                 //     console.log(response.data);
                 //   });
-              $location = $location.protocol + "//" + $location.host + $location.pathname + "login/facebook";
+              console.log($location.protocol() + "//" + $location.host() + $location.pathname() + "login/facebook");
+              $location.url($location.protocol() + "//" + $location.host() + $location.pathname() + "login/facebook");
                 // $location.url("/home/");
             } else if (loginType == "login-google") {
                 // Login code for Google then route to this location on success

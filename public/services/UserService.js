@@ -29,7 +29,7 @@
     }
 
     function loginWithGoogle(user) {
-      return $http.post('/login/google', user);
+      return $http.get('/login/google', user);
     }
 
     function logout() {
