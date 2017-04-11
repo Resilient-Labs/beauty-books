@@ -25,7 +25,7 @@
       return $http.put('/api/user/'+userId, user);
     }
     function loginWithFacebook(user) {
-      return $http.post('/login/facebook', user);
+      return $http.get('/login/facebook', user);
     }
 
     function loginWithGoogle(user) {
