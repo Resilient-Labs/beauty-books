@@ -34,7 +34,8 @@
               var path = $location.path();
               var port = $location.port();
               console.log(protocol + "://" + host + ":" + port + "/login/facebook");
-              $location.url(protocol + "://" + host + ":" + port + "/login/facebook");
+              var fburl = protocol + "://" + host + ":" + port + "/login/facebook";
+              $location.url(fburl);
                 // $location.url("/home/");
             } else if (loginType == "login-google") {
                 // Login code for Google then route to this location on success
