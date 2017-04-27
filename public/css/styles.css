@@ -54,7 +54,11 @@ button {
     padding: 10px 20px;
 }
 .centered-button {
+<<<<<<< HEAD
+  margin: 10px auto 0px;
+=======
     margin: 10px auto 0px;
+>>>>>>> upstream/master
 }
 .login-btn {
     background-color: #333;
