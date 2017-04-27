@@ -66,6 +66,38 @@
   font-size: 35px;*/
 }
 .expenses-form {
+<<<<<<< HEAD
+  display: block;
+  float: left;
+  height: 100vh;
+  padding: 15px;
+  text-align: center;
+  width: 100%;
+  z-index: 3;
+}
+.expenses-form a {
+  display: inline-block;
+  margin: auto;
+  text-decoration: underline;
+}
+.expenses-form button {
+  margin: 15px auto;
+  min-width: 50%;
+}
+.expenses-form input {
+  display: block;
+  height: 45px;
+  padding: 5px 15px;
+  margin: 0;
+  width: calc( 100% - 15px * 4 );
+
+}
+.expenses-form label {
+  display: block;
+  float: left;
+  margin: 10px 0;
+}
+=======
     display: block;
     float: left;
     height: 100vh;
@@ -96,3 +128,4 @@
     float: left;
     margin: 10px 0;
 }
+>>>>>>> upstream/master
