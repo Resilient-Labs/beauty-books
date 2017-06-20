@@ -1,36 +1,48 @@
-<div class="container home">
-    <nav class="nav-tabs third">
+<header>
+    <a class="user-icon" href="#/settings">
+        <img ng-src="./img/user-inactive.png" alt="user" />
+    </a>
+    <a class="logo">
+        <img ng-src="./img/logo.png" alt="logo"/>
+    </a>
+</header>
+<section class="container-home">
+    <p>Hello {{ model.username }}, view your yearly growth in business below</p>
+    <div class="home-buttons">
         <a href="#/home/week">
-            <button>Week</button>
+            <button>Wk</button>
         </a>
         <a href="#/home/month">
-            <button>Month</button>
+            <button>Mo</button>
         </a>
         <a href="#/home">
-            <button>YTD</button>
+            <button class="active">Yr</button>
+        </a>
+    </div>
+    <canvas id="yearlyChart"></canvas>
+    <div class="home-more-info">
+        <small>Deductions</small>
+        <span class="large">$173</span>
+    </div>
+    <div class="home-more-info">
+        <small>Next Tax Payment</small>
+        <span class="large">$928</span>
+        <small>due on March 28, 2018</small>
+    </div>
+</section>
+<footer>
+    <nav>
+        <a href="#/home" class="active">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            <small>Home</small>
+        </a>
+        <a href="#/expenses">
+            <i class="fa fa-usd" aria-hidden="true"></i>
+            <small>Expenses</small>
+        </a>
+        <a href="#/appointments">
+            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+            <small>Appointments</small>
         </a>
     </nav>
-    <div class="arrows">
-        <i class="fa fa-sort-asc" aria-hidden="true"></i>
-        <small id="ytd-arrowup">$9,572</small>
-        <br>
-        <i class="fa fa-sort-desc" aria-hidden="true"></i>
-        <small id="ytd-arrowdown">$5,371</small>
-    </div>
-
-    <label class="total">$2,831</label>
-
-    <div class="graph">Graph Goes Here</div>
-
-    <div class="deductions">
-        <h3 class="black-line">Deductions</h3>
-        <label class="total">$0</label>
-        <p>0 Deductions</p>
-    </div>
-
-    <div class="next-tax-payment">
-        <h3 class="black-line">Next Tax Payment</h3>
-        <label class="total">$692</label>
-        <p>Due June 17, 2017</p>
-    </div>
-</div>
+</footer>

@@ -6,12 +6,6 @@
         .module("BeautyBooks")
         .config(Configuration);
 
-    // function setTab() {
-    //     switch ($location.path()) {
-    //         case '/home':
-    //
-    //     }
-    // }
     /**
      * Configures the routes for the Single Page Application connecting controllers to views
      * @param $routeProvider
@@ -39,11 +33,6 @@
                 controller: "HomeYTDController",
                 controllerAs: "model"
             })
-            .when("/home/year", {
-                templateUrl: "views/home/home-ytd.html",
-                controller: "HomeYTDController",
-                controllerAs: "model"
-            })
             .when("/home/week", {
                 templateUrl: "views/home/home-week.html",
                 controller: "HomeWeekController",
@@ -55,41 +44,25 @@
                 controllerAs: "model"
             })
             // Scheduler Routes
-            .when("/scheduler", {
-                templateUrl: "views/scheduler/scheduler.html",
-                controller: "SchedulerController",
+            .when("/appointments", {
+                templateUrl: "views/appointments/appointments-list.html",
+                controller: "AppointmentsListController",
                 controllerAs: "model"
             })
-            // Transactions Routes
-            .when("/transactions", {
-                templateUrl: "views/transactions/transactions-added.html",
-                controller: "TransactionsAddedController",
-                controllerAs: "model"
-            })
-            .when("/transactions/added", {
-                templateUrl: "views/transactions/transactions-added.html",
-                controller: "TransactionsAddedController",
-                controllerAs: "model"
-            })
-            .when("/transactions/reviewed", {
-                templateUrl: "views/transactions/transactions-reviewed.html",
-                controller: "TransactionsReviewedController",
+            .when("/appointments/add", {
+                templateUrl: "views/appointments/appointments-new.html",
+                controller: "AppointmentsAddController",
                 controllerAs: "model"
             })
             // Expenses Routes
             .when("/expenses", {
-                templateUrl: "views/expenses/expenses-quarterly-spending.html",
-                controller: "ExpensesQuarterlyController",
+                templateUrl: "views/expenses/expenses-list.html",
+                controller: "ExpensesListController",
                 controllerAs: "model"
             })
-            .when("/expenses/quarterly", {
-                templateUrl: "views/expenses/expenses-quarterly-spending.html",
-                controller: "ExpensesQuarterlyController",
-                controllerAs: "model"
-            })
-            .when("/expense", {
-                templateUrl: "views/expenses/expenses-annual-spending.html",
-                controller: "ExpensesAnnualController",
+            .when("/expenses/add", {
+                templateUrl: "views/expenses/expenses-new.html",
+                controller: "ExpensesAddController",
                 controllerAs: "model"
             })
             // Settings Routes

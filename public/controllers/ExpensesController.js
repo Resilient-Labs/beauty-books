@@ -1,21 +1,21 @@
 (function() {
   angular
     .module("BeautyBooks")
-    .controller("ExpensesAnnualController", ExpensesAnnualController)
-    .controller("ExpensesQuarterlyController", ExpensesQuarterlyController);
+    .controller("ExpensesAddController", ExpensesAddController)
+    .controller("ExpensesListController", ExpensesListController);
 
   /**
    * Controls the flow of data for the expenses-annual view
    * @constructor
    */
-  function ExpensesAnnualController(ExpenseService, $location){
+  function ExpensesAddController(ExpenseService, $location){
     let vm = this;
     vm.toggleModal=toggleModal;
     vm.showModal = false;
     vm.createExpense = createExpense;
 
     function init() {
-      console.log("Expenses Annual Controller loaded");
+      console.log("Expenses Add Controller loaded");
     }
     init();
 
@@ -43,11 +43,11 @@
    * Controls the flow of data for the expenses-quarterly view
    * @constructor
    */
-  function ExpensesQuarterlyController() {
+  function ExpensesListController() {
     let vm = this;
 
     function init() {
-      console.log("Expenses Quarterly Controller loaded");
+      console.log("Expenses List Controller loaded");
     }
     init();
   }

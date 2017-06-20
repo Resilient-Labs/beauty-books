@@ -4,6 +4,20 @@
 @import "settings.css";
 @import "home.css";
 @import "transactions.css";
+/*hex codes:*/
+
+/*Beauty: #ed1f83*/
+
+/*Books: #231f20*/
+
+/*Top & Bottom lines: #e30b5d*/
+
+
+/*Font details:*/
+
+/*Beauty: Mathilde*/
+
+/*Books: Aller Light*/
 /*
 Author: Resilient Coders
 Author URI: http://www.resilientcoders.org/
@@ -44,32 +58,71 @@ body {
     font-size: 16px;
 }
 button {
-    /*background-color: #333;*/
     border: none;
     color: #fff;
     cursor: pointer;
     display: block;
-    margin: 10px auto;
     outline: 0;
-    padding: 10px 20px;
 }
 .centered-button {
     margin: 10px auto 0px;
 }
-.login-btn {
-    background-color: #333;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-    display: block;
-    height: 38px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 240px;
-    padding: 10px 20px;
+/*--------------------------------------------------------------------
+# TYPOGRAPHY
+--------------------------------------------------------------------*/
+a {
+    font-family: Roboto, "Roboto", sans-serif;
+    text-decoration: none;
+}
+blockquote {
+    font-family: Roboto, "Roboto", sans-serif;
+}
+button {
+    font-family: Roboto, "Roboto", sans-serif;
+    font-weight: lighter;
+}
+h1 {
+    font-family: Roboto, "Roboto", sans-serif;
+    font-size: 1.7em;
+}
+h2 {
+    color: #af1b3f;
+    font-family: Roboto, "Roboto", sans-serif;
+    font-size: 36px;
+    font-weight: lighter;
+}
+h3 {
+    font-family: Roboto, "Roboto", sans-serif;
+    font-size: 1.4em;
+}
+h4 {
+    font-family: Roboto, "Roboto", sans-serif;
+    font-size: 1.3em;
+}
+h5 {
+    font-family: Roboto, "Roboto", sans-serif;
+    font-size: 1.2em;
+}
+h6 {
+    font-family: Roboto, "Roboto", sans-serif;
+    font-size: 1.1em;
+}
+p {
+    font-family: Roboto, "Roboto", sans-serif;
+    font-size: 18px;
+    font-weight: lighter;
+}
+small {
+    font-family: Roboto, "Roboto", sans-serif;
+    font-weight: lighter;
+}
+ul, ol {
+    font-family: Roboto, "Roboto", sans-serif;
+}
+ul li, ol li {
+    font-family: Roboto, "Roboto", sans-serif;
+    font-size: 18px;
+    font-weight: lighter;
 }
 /*--------------------------------------------------------------------
 ## EVENTS
@@ -111,68 +164,348 @@ button:hover{
 ## HEADER
 --------------------------------------------------------------------*/
 header {
-    background: #333;
-    height: 60px;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 2;
-}
-header nav {
-    height: inherit;
+    border-bottom: 1px solid #ddd;
+    display: flex!important;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    align-self: center;
+    -webkit-align-self: center;
+    justify-content: center;
+    -webkit-justify-content: center;
     text-align: center;
+    width: 100%;
 }
-header nav img {
-    height: 100%;
+header .user-icon {
+    position: absolute;
+    left: 15px;
+}
+header .user-icon img {
+    height: 30px;
+}
+header .logo {
+    margin: 0 auto;
+}
+header .logo img {
+    height: 60px;
+    padding: 10px;
     width: auto;
 }
 /*--------------------------------------------------------------------
-# TYPOGRAPHY
+# LOGIN SCREEN
 --------------------------------------------------------------------*/
-a {
-    font-family: "Oswald", "Roboto", sans-serif;
-    text-decoration: none;
+.container-login {
+    display: table;
+    margin: 0 auto;
+    padding: 15px;
+    text-align: center;
+    width: calc(100% - 30px);
 }
-blockquote {
+.container-login div {
+    display: table-cell;
+    height: calc(100vh / 2);
+    vertical-align: middle;
+}
+.container-login div h2 {
+    color: #af1b3f;
+    font-size: 20px;
+    font-family: Roboto, "Roboto", sans-serif;
+    font-weight: lighter;
+    text-align: center;
+}
+.container-login div a {
+    display: block;
+    margin: 15px auto;
+}
+.container-login div a button {
+    margin: 0 auto;
+    min-height: 45px;
+    min-width: 66vw;
+    text-transform: uppercase;
+}
+.container-login div a#login-facebook button {
+    background-color: #3B5998;
+}
+.container-login div a#login-google button {
+    background-color: #dd4b39;
+}
+.container-login div a button .social-icon {
+    max-height: 16px;
+    vertical-align: text-bottom;
+}
+/*--------------------------------------------------------------------
+# HOME SCREEN
+--------------------------------------------------------------------*/
+.container-home {
+    padding: 15px;
+    text-align: center;
+    width: calc(100% - 30px);
+}
+.container-home p {
+    font-family: Roboto, "Roboto", sans-serif;
+}
+.container-home div.home-buttons {
+    margin: 15px auto;
+    text-align: center;
+}
+.container-home div.home-buttons button {
+    border-radius: 50%;
+    color: #231f20;
+    display: inline-block;
+    height: 50px;
+    margin: 15px;
+    text-align: center;
+    width: 50px;
+}
+.container-home div.home-buttons button.active {
+    background-color: #af1b3f;
+    color: #fff;
+}
+.container-home canvas {
+    max-width: 100%;
+}
+.container-home div.home-more-info {
+    display: inline-block;
+    float: left;
+    margin: 30px 0 75px;
+    width: 50%;
+}
+.container-home div.home-more-info small:first-of-type {
+    border: 1px solid #ddd;
+    display: block;
+    padding: 15px;
+    width: calc(100% - 30px);
+}
+.container-home div.home-more-info span.large {
+    clear: both;
+    color: #af1b3f;
+    display: block;
+    font-family: Roboto, "Roboto", sans-serif;
+    font-size: 54px;
+    font-weight: lighter;
+    margin: 15px auto;
+    text-align: center;
+}
+/*--------------------------------------------------------------------
+# EXPENSES SCREEN
+--------------------------------------------------------------------*/
+.container-expenses {
+    text-align: center;
+}
+.container-expenses div.add-new {
+    border-bottom: 1px solid #ddd;
+    clear: both;
+    display: table;
+    float: left;
+    padding: 5px 15px;
+    text-align: left;
+    width: calc(100% - 30px);
+}
+.container-expenses div.add-new p {
+    display: inline-block;
+    float: left;
+    width: 80%;
+}
+.container-expenses div.add-new a {
+    display: inline-block;
+    float: right;
+    text-align: right;
+    width: 20%;
+}
+.container-expenses div.add-new a img {
+    background-color: #af1b3f;
+    border-radius: 50%;
+    height: 20px;
+    padding: 10px;
+    width: 20px;
+}
+.container-expenses h2 {
+    display: block;
+    float: left;
+    margin: 15px 0;
+    padding: 15px;
+    text-align: left;
+    width: calc(100% - 30px);
+}
+.container-expenses ul {
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 30px);
+}
+.container-expenses ul li {
+    padding: 15px;
+    text-align: left;
+    width: 100%;
+}
+.container-expenses ul li:nth-of-type(odd) {
+    background-color: rgb(230,230,230);
+}
+.container-expenses ul li:nth-of-type(even) {
 
 }
-h1 {
-    font-family: "Oswald", "Roboto", sans-serif;
-    font-size: 2em;
+.container-expenses ul li span {
+    position: absolute;
+    right: 15px;
 }
-h2 {
-    font-family: "Oswald", "Roboto", sans-serif;
-    font-size: 1.8em;
-}
-h3 {
-    font-family: "Oswald", "Roboto", sans-serif;
-    font-size: 1.6em;
-}
-h4 {
-    font-family: "Oswald", "Roboto", sans-serif;
-    font-size: 1.4em;
-}
-h5 {
-    font-family: "Oswald", "Roboto", sans-serif;
-    font-size: 1.25em;
-}
-h6 {
-    font-family: "Oswald", "Roboto", sans-serif;
-    font-size: 1.15em;
-}
-p {
-    font-family: "Oswald", "Roboto", sans-serif;
-    font-size: 1em;
-}
-small {
+.container-expenses form {
 
 }
-ul, ol {
+.container-expenses form label {
+    color: #231f20;
+    display: block;
+    float: left;
+    font-size: 12px;
+    margin: 15px 0;
+    padding: 0 15px;
+    text-align: left;
+}
+.container-expenses form input {
+    display: block;
+    padding: 15px;
+    width: calc(100% - 30px);
+}
+.container-expenses form input::-moz-placeholder, .container-expenses form input::-webkit-input-placeholder,
+.container-expenses form input:-ms-input-placeholder, .container-expenses form input:-moz-placeholder {
+    color: rgb(153,153,153);
+}
+.container-expenses form select {
+    border: none;
+    background: none;
+    color: rgb(153,153,153);
+    display: block;
+    margin: 0 auto;
+    padding: 15px;
+    width: calc(100% - 15px);
+}
+.container-expenses form select option {
+    padding: 15px;
+}
+.container-expenses form button {
+    background-color: #af1b3f;
+    color: #fff;
+    margin: 30px auto;
+    min-height: 45px;
+    min-width: 66vw;
+    text-transform: uppercase;
+}
+.container-expenses form a {
+    text-decoration: underline;
+}
+.container-expenses form a:hover {
+    color: #af1b3f;
+}
+/*--------------------------------------------------------------------
+# APPOINTMENTS SCREEN
+--------------------------------------------------------------------*/
+.container-appointments {
+    text-align: center;
+}
+.container-appointments div.add-new {
+    border-bottom: 1px solid #ddd;
+    clear: both;
+    display: table;
+    float: left;
+    padding: 5px 15px;
+    text-align: left;
+    width: calc(100% - 30px);
+}
+.container-appointments div.add-new p {
+    display: inline-block;
+    float: left;
+    width: 80%;
+}
+.container-appointments div.add-new a {
+    display: inline-block;
+    float: right;
+    text-align: right;
+    width: 20%;
+}
+.container-appointments div.add-new a img {
+    background-color: #af1b3f;
+    border-radius: 50%;
+    height: 20px;
+    padding: 10px;
+    width: 20px;
+}
+.container-appointments h2 {
+    display: block;
+    float: left;
+    margin: 15px 0;
+    padding: 15px;
+    text-align: left;
+    width: calc(100% - 30px);
+}
+.container-appointments div.appointment {
+    display: block;
+    float: left;
+    width: 100%;
+}
+.container-appointments div.appointment:nth-of-type(even) {
+    background-color: rgb(230,230,230);
+}
+.container-appointments div.appointment:nth-of-type(odd) {
 
 }
-ul li, ol li {
+.container-appointments div.appointment label {
+    /*color: #231f20;*/
+    display: inline-block;
+    float: left;
+    font-size: 12px;
+    margin: 10px 0 5px;
+    padding: 0 15px;
+    text-align: left;
+}
+.container-appointments div.appointment label:nth-of-type(-n+2) {
+    width: calc(50% - 30px);
+}
+.container-appointments div.appointment p:nth-of-type(-n+2) {
+    display: inline-block;
+    float: left;
+    margin: 5px 0 10px;
+    padding: 0 15px;
+    text-align: left;
+    width: calc(50% - 30px);
+}
+.container-appointments div.appointment p:nth-of-type(3) {
+    display: block;
+    float: left;
+    margin: 5px 0 10px;
+    padding: 0 15px;
+    text-align: left;
+    width: calc(100% - 30px);
+}
+.container-appointments div.appointment p:nth-of-type(2),
+.container-appointments div.appointment label:nth-of-type(2){
+    text-align: right;
+}
+.container-appointments div.appointment p {
 
+}
+/*--------------------------------------------------------------------
+# SETTINGS SCREEN
+--------------------------------------------------------------------*/
+.container-settings {
+
+}
+.container-settings h2 {
+    padding: 0 15px;
+    width: calc(100% - 30px);
+}
+.container-settings label {
+    float: left;
+    font-size: 12px;
+    margin: 5px 0;
+    padding: 5px 15px;
+    width: calc(100% - 30px);
+}
+.container-settings input {
+    padding: 15px;
+    width: calc(100% - 30px);
 }
 /*--------------------------------------------------------------------
 # COMPONENTS
@@ -240,9 +573,8 @@ section.container {
 }
 .logo {
     display: block;
-    float: left;
-    margin: 15px auto;
-    max-width: 200px;
+    margin: 30px auto;
+    max-width: 185px;
     position: relative;
     width: 100%;
 }
@@ -278,7 +610,7 @@ section.container {
 ## FOOTER TABS NAVIGATION
 --------------------------------------------------------------------*/
 footer {
-    background-color: #333;
+    background-color: #e30b5d;
     bottom: 0;
     color: #fff;
     float: left;
@@ -301,7 +633,7 @@ footer nav a {
     width: 15%;
 }
 footer nav a:hover, footer nav a.current-tab {
-    color: darkred;
+    color: #231f20;
     text-decoration: none;
 }
 footer nav a .fa {
@@ -311,6 +643,9 @@ footer nav a .fa {
 }
 footer nav a .fa, footer nav a small {
     display: block;
+}
+footer nav .active * {
+    color: #231f20;
 }
 /*--------------------------------------------------------------------
 # Accessibility

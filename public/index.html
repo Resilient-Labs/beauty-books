@@ -22,6 +22,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.4.3/velocity.min.js"></script>
     <!-- Load Velocity JS UI -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.4.3/velocity.ui.min.js"></script>
+    <!-- Load Chart JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     <!-- Services -->
     <script type="text/javascript" src="services/UserService.js"></script>
     <script type="text/javascript" src="services/AppointmentService.js"></script>
@@ -30,13 +32,13 @@
     <script type="text/javascript" src="controllers/LoginController.js"></script>
     <script type="text/javascript" src="controllers/ExpensesController.js"></script>
     <script type="text/javascript" src="controllers/HomeController.js"></script>
-    <script type="text/javascript" src="controllers/SchedulerController.js"></script>
+    <script type="text/javascript" src="controllers/AppointmentsController.js"></script>
     <script type="text/javascript" src="controllers/SettingsController.js"></script>
     <script type="text/javascript" src="controllers/TransactionsController.js"></script>
 </head>
 <body>
-    <ng-include src="'./views/components/header.html'"></ng-include>
+    <!--<ng-include src="'./views/components/header.html'"></ng-include>-->
     <div ng-view></div>
-    <ng-include src="'./views/components/tabs.html'"></ng-include>
+    <!--<ng-include src="'./views/components/tabs.html'"></ng-include>-->
 </body>
 </html>

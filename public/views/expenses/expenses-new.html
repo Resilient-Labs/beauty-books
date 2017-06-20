@@ -1,0 +1,48 @@
+<header>
+    <a class="user-icon" href="#/settings">
+        <img ng-src="./img/user-inactive.png" alt="user" />
+    </a>
+    <a class="logo">
+        <img ng-src="./img/logo.png" alt="logo"/>
+    </a>
+</header>
+<section class="container-expenses">
+    <h2>New Expenses</h2>
+    <form>
+        <label for="expense-type">Expense Type</label>
+        <select name="expense-type" id="expense-type">
+            <option value="" disabled selected>Select the expense type</option>
+            <option value="advertising">Advertising</option>
+            <option value="assets">Assets</option>
+            <option value="commissions">Commissions</option>
+            <option value="insurance">Insurance</option>
+            <option value="materials-supplies">Materials & Supplies</option>
+            <option value="meals-entertainment">Meals & Entertainment</option>
+            <option value="professional-services">Professional Services</option>
+        </select>
+        <label for="expense-total">Expense Total</label>
+        <input type="text" name="expense-total" id="expense-total"
+               placeholder="Expense Total">
+        <label for="expense-date">Date of Expense</label>
+        <input pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d"
+            type="text" name="expense-date" id="expense-date" placeholder="MM/DD/YYYY">
+        <button type="submit">Add Expense</button>
+        <a href="#/expenses">Cancel</a>
+    </form>
+</section>
+<footer>
+    <nav>
+        <a href="#/home">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            <small>Home</small>
+        </a>
+        <a href="#/expenses" class="active">
+            <i class="fa fa-usd" aria-hidden="true"></i>
+            <small>Expenses</small>
+        </a>
+        <a href="#/appointments">
+            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+            <small>Appointments</small>
+        </a>
+    </nav>
+</footer>

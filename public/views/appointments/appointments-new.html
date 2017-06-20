@@ -1,0 +1,43 @@
+<header>
+  <a class="user-icon" href="#/settings">
+    <img ng-src="./img/user-inactive.png" alt="user" />
+  </a>
+  <a class="logo">
+    <img ng-src="./img/logo.png" alt="logo"/>
+  </a>
+</header>
+<section class="container-expenses">
+  <h2>New Appointment</h2>
+  <form>
+    <label for="appointment-client">Client Name</label>
+    <input type="text" name="appointment-client" id="appointment-client"
+           placeholder="Client Name">
+    <label for="appointment-amount">Amount</label>
+    <input type="text" name="appointment-amount" id="appointment-amount"
+           placeholder="Appointment Total">
+    <label for="appointment-date">Date of Appointment</label>
+    <input pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d"
+           type="text" name="appointment-date" id="appointment-date" placeholder="MM/DD/YYYY">
+    <label for="appointment-service">Service</label>
+    <input type="text" name="appointment-service" id="appointment-service"
+           placeholder="Description of the Service">
+    <button type="submit">Add Appointments</button>
+    <a href="#/appointments">Cancel</a>
+  </form>
+</section>
+<footer>
+  <nav>
+    <a href="#/home">
+      <i class="fa fa-home" aria-hidden="true"></i>
+      <small>Home</small>
+    </a>
+    <a href="#/expenses">
+      <i class="fa fa-usd" aria-hidden="true"></i>
+      <small>Expenses</small>
+    </a>
+    <a href="#/appointments" class="active">
+      <i class="fa fa-calendar-o" aria-hidden="true"></i>
+      <small>Appointments</small>
+    </a>
+  </nav>
+</footer>

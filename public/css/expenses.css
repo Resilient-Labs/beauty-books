@@ -41,12 +41,18 @@
     vertical-align: middle;
     width: 100%;
 }
-.container.expenses ol ul {
-    line-height: 1.9;
-    padding: 0px;
-    margin-bottom: 30px;
-    text-decoration: none;
+.container.expenses ul li:nth-of-type(odd) {
+    background-color: #eee;
 }
+.container.expenses ul li:nth-of-type(even) {
+    background-color: #333;
+}
+/*.container.expenses ol ul {*/
+    /*line-height: 1.9;*/
+    /*padding: 0px;*/
+    /*margin-bottom: 30px;*/
+    /*text-decoration: none;*/
+/*}*/
 .container.expenses span {
     display: inline-block;
     float: left;

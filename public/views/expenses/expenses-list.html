@@ -6,31 +6,31 @@
         <img ng-src="./img/logo.png" alt="logo"/>
     </a>
 </header>
-<section class="container-login">
-    <div>
-        <h2>Beauty Books</h2>
-        <a ng-click="model.login($event)" id="login-facebook">
-            <button>
-                <img class="social-icon" ng-src="./img/facebook-icon.png" alt="fb-logo"/>
-                Login with Facebook
-            </button>
-        </a>
-        <a ng-click="model.login($event)" id="login-google">
-            <button>
-                <img class="social-icon" ng-src="./img/google-icon.png" alt="gmail-logo"/>
-                Login with Google
-            </button>
+<section class="container-expenses">
+    <div class="add-new">
+        <p>Add a new expense here</p>
+        <a href="#/expenses/add" class="add-button">
+            <img src="./img/add.png" alt="add-button"/>
         </a>
     </div>
+    <h2>Expenses</h2>
+    <ul>
+        <li>Advertising <span>$49</span></li>
+        <li>Assets <span>$319</span></li>
+        <li>Commissions <span>$27</span></li>
+        <li>Insurance <span>$81</span></li>
+        <li>Materials & Supplies <span>$69</span></li>
+        <li>Meals & Entertainment <span>$19</span></li>
+        <li>Professional Services <span>$33</span></li>
+    </ul>
 </section>
-<!-- TABS FOR THE NAV -->
 <footer>
     <nav>
         <a href="#/home">
             <i class="fa fa-home" aria-hidden="true"></i>
             <small>Home</small>
         </a>
-        <a href="#/expenses">
+        <a href="#/expenses" class="active">
             <i class="fa fa-usd" aria-hidden="true"></i>
             <small>Expenses</small>
         </a>

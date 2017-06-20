@@ -125,10 +125,11 @@
 
 .container.settings ul {
   list-style: none;
-  padding: 0;
+  padding: 0 15px;
 }
 .container.settings ul li {
   clear: both;
+  margin: 10px auto;
 }
 /*--------------------------------------------------------------------
 # RESPONSIVE
