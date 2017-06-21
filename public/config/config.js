@@ -75,4 +75,28 @@
                 redirectTo: "/"
             })
     }
+
+  function checkLoggedinService() {
+    return $http.get('/api/loggedin')
+      .then(function(response) {
+        return response.data;
+      }, function(err) { console.log(err); });
+  }
+
+  function checkLoggedin($q, $location, UserService) {
+    var deferred = $q.defer();
+
+    checkLoggedinService()
+      .then(function(user) {
+        if (user == '0') {
+          $location.url('/login');
+          deferred.reject();
+        } else {
+          $location.url('/user/'+user._id);
+          deferred.resolve(user);
+        }
+      });
+    return deferred.promise;
+  }
+
 })();
