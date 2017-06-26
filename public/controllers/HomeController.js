@@ -47,11 +47,16 @@
      * Controls the flow of data for the home-month view
      * @constructor
      */
-    function HomeMonthController() {
+    function HomeMonthController($http) {
         let vm = this;
 
         function init() {
             console.log("Home Month Controller loaded");
+          $http.get('/api/user')
+            .then(function (response) {
+              console.log(response.data);
+              vm.user = response.data;
+            })
         }
         init();
 
@@ -80,11 +85,17 @@
      * Controls the flow of data for the home-ytd view
      * @constructor
      */
-    function HomeYTDController() {
+    function HomeYTDController($http) {
         let vm = this;
 
         function init() {
             console.log("Home YTD Controller loaded");
+            
+            $http.get('/api/user')
+            .then(function (response) {
+              console.log(response.data);
+              vm.user = response.data;
+            })
         }
         init();
 

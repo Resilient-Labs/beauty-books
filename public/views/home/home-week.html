@@ -7,7 +7,10 @@
     </a>
 </header>
 <section class="container-home">
-    <p>Hello {{ model.username }}, view your weekly growth in business below</p>
+    <p>Hello {{ model.user.firstname }} {{ model.user.lastname }}, view your weekly growth in
+        business below</p>
+    <p>Model : {{ model }}</p>
+    <p>Model User : {{ model.user}}</p>
     <div class="home-buttons">
         <a href="#/home/week">
             <button class="active">Wk</button>
