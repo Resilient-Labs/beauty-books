@@ -17,8 +17,8 @@
 
             $http.get('/api/user')
             .then(function (response) {
-              console.log(response.data);
               vm.user = response.data;
+              console.log(vm.user);
             })
         }
         init();
@@ -54,8 +54,8 @@
             console.log("Home Month Controller loaded");
           $http.get('/api/user')
             .then(function (response) {
-              console.log(response.data);
               vm.user = response.data;
+              console.log(vm.user);
             })
         }
         init();
@@ -90,11 +90,11 @@
 
         function init() {
             console.log("Home YTD Controller loaded");
-            
+
             $http.get('/api/user')
             .then(function (response) {
-              console.log(response.data);
               vm.user = response.data;
+              console.log(vm.user);
             })
         }
         init();
