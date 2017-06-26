@@ -9,7 +9,7 @@
      * Controls the flow of data for the home-week view
      * @constructor
      */
-    function HomeWeekController() {
+    function HomeWeekController($http) {
         let vm = this;
 
         function init() {
