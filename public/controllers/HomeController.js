@@ -14,6 +14,12 @@
 
         function init() {
             console.log("Home Week Controller loaded");
+
+            $http.get('/api/user')
+            .then(function (response) {
+              console.log(response.data);
+              vm.user = response.data;
+            })
         }
         init();
       var ctx = document.getElementById('weeklyChart').getContext('2d');
