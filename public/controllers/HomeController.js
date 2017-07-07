@@ -15,10 +15,12 @@
         function init() {
             console.log("Home Week Controller loaded");
 
-            $http.get('/api/user')
+            return $http.get('/api/user')
             .then(function (response) {
               vm.user = response.data;
               console.log(vm.user);
+              vm.userid = response.data.id;
+              console.log(vm.user.id);
             })
         }
         init();
@@ -52,11 +54,12 @@
 
         function init() {
             console.log("Home Month Controller loaded");
-          $http.get('/api/user')
+          return $http.get('/api/user')
             .then(function (response) {
               vm.user = response.data;
               console.log(vm.user);
             })
+          //console.log("help");
         }
         init();
 
