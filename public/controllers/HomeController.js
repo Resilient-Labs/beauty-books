@@ -9,7 +9,7 @@
      * Controls the flow of data for the home-week view
      * @constructor
      */
-    function HomeWeekController($http) {
+    function HomeWeekController($http, $routeParams) {
         let vm = this;
 
         function init() {
@@ -49,7 +49,7 @@
      * Controls the flow of data for the home-month view
      * @constructor
      */
-    function HomeMonthController($http) {
+    function HomeMonthController($http, $routeParams) {
         let vm = this;
 
         function init() {
@@ -88,7 +88,7 @@
      * Controls the flow of data for the home-ytd view
      * @constructor
      */
-    function HomeYTDController($http) {
+    function HomeYTDController($http, $routeParams) {
         let vm = this;
 
         function init() {
