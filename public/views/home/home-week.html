@@ -7,10 +7,13 @@
     </a>
 </header>
 <section class="container-home">
-    <p>Hello <p ng-bind="model.user.firstname"> </p>
+    <p>Hello <span ng-bind="model.user.firstname"></span>
+        <span ng-bind="user.firstname"></span>
     <p ng-bind="model.user.lastname"></p>,
     view your weekly growth in business below</p>
 
+    <span ng-bind="model.user.firstname"></span>
+    <span ng-bind="user.firstname"> </span>
     <!--<span ng-bind="model.user.lastname"></span>-->
     <!--<span ng-bind="model.user.firstname"></span>-->
     <!--<span ng-bind="model.user.id"></span>-->

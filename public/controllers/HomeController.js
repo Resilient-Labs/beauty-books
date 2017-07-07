@@ -17,7 +17,7 @@
 
             return $http.get('/api/user')
             .then(function (response) {
-              // vm.user = response.data;
+              vm.user = response.data;
               $scope.user = response.data;
               // $scope.userscope = response.data;
               // console.log(vm.user);
