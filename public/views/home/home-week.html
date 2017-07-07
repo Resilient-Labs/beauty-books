@@ -7,13 +7,14 @@
     </a>
 </header>
 <section class="container-home">
-    <p>Hello <span ng-bind="model.user.firstname"></span>
-        <span ng-bind="user.firstname"></span>
-    <p ng-bind="model.user.lastname"></p>,
-    view your weekly growth in business below</p>
-
+    <p>Hello </p>
     <span ng-bind="model.user.firstname"></span>
-    <span ng-bind="user.firstname"> </span>
+    <span ng-bind="model.user.lastname"></span>
+    <p>view your weekly growth in business below</p>
+
+    <p>here is some text, here goes the bind:
+        <span ng-bind="model.user.firstname"></span>
+    </p>
     <!--<span ng-bind="model.user.lastname"></span>-->
     <!--<span ng-bind="model.user.firstname"></span>-->
     <!--<span ng-bind="model.user.id"></span>-->
