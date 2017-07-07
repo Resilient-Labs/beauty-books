@@ -15,6 +15,7 @@
         function init() {
             console.log("Home Week Controller loaded");
 
+            vm.test = "Michael";
             return $http.get('/api/user')
             .then(function (response) {
               vm.user = response.data;
