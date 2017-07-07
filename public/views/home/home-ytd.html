@@ -7,7 +7,9 @@
     </a>
 </header>
 <section class="container-home">
-    <p>Hello {{model.user}}, view your yearly growth in business below</p>
+    <p>Hello <p ng-bind="model.user.firstname"> </p>
+    <p ng-bind="model.user.lastname"></p>,
+        view your yearly growth in business below</p>
     <div class="home-buttons">
         <a href="#/home/week">
             <button>Wk</button>

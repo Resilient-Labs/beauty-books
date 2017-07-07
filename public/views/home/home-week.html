@@ -7,14 +7,14 @@
     </a>
 </header>
 <section class="container-home">
-    <p>Hello view your weekly growth in
-        business below</p>
-    <p>Model User : {{model.test}} {{test}}, {{vm.test}}, {{this.test}}</p>
-    <!--<span ng-bind="test"></span>-->
-    <span ng-bind="userscope.lastname"></span>
-    <span ng-bind="model.user.firstname"></span>
-    <span ng-bind="model.user.id"></span>
-    <span>ng bind used above</span>
+    <p>Hello <p ng-bind="model.user.firstname"> </p>
+    <p ng-bind="model.user.lastname"></p>,
+    view your weekly growth in business below</p>
+
+    <!--<span ng-bind="model.user.lastname"></span>-->
+    <!--<span ng-bind="model.user.firstname"></span>-->
+    <!--<span ng-bind="model.user.id"></span>-->
+
     <div class="home-buttons">
         <a href="#/home/week">
             <button class="active">Wk</button>
