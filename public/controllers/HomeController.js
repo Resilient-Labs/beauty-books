@@ -19,6 +19,7 @@
             .then(function (response) {
               vm.user = response.data;
               $scope.user = response.data;
+              console.log(vm.user);
             })
         }
         init();
