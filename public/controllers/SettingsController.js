@@ -7,12 +7,18 @@
      * Controls the flow of data for the settings view
      * @constructor
      */
-    function SettingsController() {
+    function SettingsController($http, $routeParams, $scope) {
         let vm = this;
 
         function init() {
             console.log("Settings Controller loaded");
-        }
-        init();
+
+        $http.get('/api/user')
+          .then(function (response) {
+            vm.user = response.data;
+            $scope.user = response.data;
+          })
+      }
+      init();
     }
 })();
