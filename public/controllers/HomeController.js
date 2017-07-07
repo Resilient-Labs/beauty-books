@@ -15,14 +15,10 @@
         function init() {
             console.log("Home Week Controller loaded");
 
-            return $http.get('/api/user')
+            $http.get('/api/user')
             .then(function (response) {
               vm.user = response.data;
               $scope.user = response.data;
-              // $scope.userscope = response.data;
-              // console.log(vm.user);
-              // vm.userid = response.data.id;
-              // console.log(vm.user.id);
             })
         }
         init();
@@ -56,11 +52,9 @@
 
         function init() {
             console.log("Home Month Controller loaded");
-          return $http.get('/api/user')
+          $http.get('/api/user')
             .then(function (response) {
               $scope.user = response.data;
-              // vm.user = response.data;
-              // console.log(vm.user);
             })
           //console.log("help");
         }
@@ -98,7 +92,7 @@
             console.log("Home YTD Controller loaded");
 
 
-            return $http.get('/api/user')
+            $http.get('/api/user')
             .then(function (response) {
               $scope.user = response.data;
               // vm.user = response.data;
