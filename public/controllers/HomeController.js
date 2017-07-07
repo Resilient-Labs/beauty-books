@@ -9,7 +9,7 @@
      * Controls the flow of data for the home-week view
      * @constructor
      */
-    function HomeWeekController($http, $routeParams) {
+    function HomeWeekController($http, $routeParams, $scope) {
         let vm = this;
 
         function init() {
@@ -19,6 +19,7 @@
             return $http.get('/api/user')
             .then(function (response) {
               vm.user = response.data;
+              $scope.userscope = response.data;
               console.log(vm.user);
               vm.userid = response.data.id;
               console.log(vm.user.id);
