@@ -99,7 +99,7 @@
           $location.url('/login');
           console.log("back to logged in");
         } else {
-          $location.url('/home/');
+          // $location.url('/home/');
           deferred.resolve(user);
           console.log("user is logged in");
         }
