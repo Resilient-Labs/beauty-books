@@ -38,7 +38,7 @@
     }
 
     function loggedin() {
-      return $http.get('/api/loggedin')
+      return $http.get('/api/user')
     }
     // function deleteUser(userId) {
     //   return $http.delete('/api/user', userId);

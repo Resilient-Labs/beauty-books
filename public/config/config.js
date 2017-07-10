@@ -92,12 +92,16 @@
       .loggedin()
       .then(function (response) {
         var user = response.data;
+        console.log("log from config");
+        console.log(user);
         if (user == '0') {
           deferred.reject();
           $location.url('/login');
+          console.log("back to logged in");
         } else {
           $location.url('/home/');
           deferred.resolve(user);
+          console.log("user is logged in");
         }
       });
     return deferred.promise;
