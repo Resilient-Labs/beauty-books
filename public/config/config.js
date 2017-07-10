@@ -77,21 +77,24 @@
             })
     }
 
-  function checkLoggedinService($http) {
-    return $http.get('/api/loggedin')
-      .then(function(response) {
-        return response.data;
-      }, function(err) { console.log(err); });
-  }
+  // function checkLoggedinService(UserService) {
+  //   UserService
+  //     .loggedin()
+  //     .then(function(response) {
+  //       return response.data;
+  //     }, function(err) { console.log(err); });
+  // }
 
-  function checkLoggedin($q, $location) {
+  function checkLoggedin($q, $location, UserService) {
     var deferred = $q.defer();
 
-    checkLoggedinService()
-      .then(function(user) {
+    UserService
+      .loggedin()
+      .then(function (response) {
+        var user = response.data;
         if (user == '0') {
-          $location.url('/login');
           deferred.reject();
+          $location.url('/login');
         } else {
           $location.url('/home/');
           deferred.resolve(user);

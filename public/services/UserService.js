@@ -35,6 +35,9 @@
     function logout() {
 
     }
+    function loggedin() {
+      return $http.get('/api/loggedin')
+    }
     // function deleteUser(userId) {
     //   return $http.delete('/api/user', userId);
     // }
