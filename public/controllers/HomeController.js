@@ -18,7 +18,9 @@
             $http.get('/api/user')
             .then(function (response) {
               vm.user = response.data;
+              vm.user.name = response.data.firstname + " " + response.data.lastname;
               $scope.user = response.data;
+              $scope.user.name = response.data.firstname + " " + response.data.lastname;
               console.log(vm.user);
             })
         }
@@ -86,7 +88,7 @@
      * Controls the flow of data for the home-ytd view
      * @constructor
      */
-    function HomeYTDController($http, $routeParams, $scope) {
+    function HomeYTDController($http, $routeParams, $scope, currentUser) {
         let vm = this;
 
         function init() {

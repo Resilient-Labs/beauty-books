@@ -38,6 +38,15 @@
     <label>Service</label>
     <p>{{ model.appointment.service }} Wash, Blow out, Color Correction</p>
   </div>
+
+  <div class="appointment" ng-repeat="appt in model.appts">
+    <label>Client Name</label>
+    <label>Amount</label>
+    <p>N {{ appt.client }} </p>
+    <p>${{ appt.amount }} </p>
+    <label>Service</label>
+    <p>{{ appt.note }} Wash, Blow out, Color Correction</p>
+  </div>
 </section>
 <footer>
   <nav>

@@ -11,17 +11,18 @@
   <form>
     <label for="appointment-client">Client Name</label>
     <input type="text" name="appointment-client" id="appointment-client"
-           placeholder="Client Name">
+           placeholder="Client Name"> <!--ng-model="model.appt.client"-->
     <label for="appointment-amount">Amount</label>
     <input type="text" name="appointment-amount" id="appointment-amount"
-           placeholder="Appointment Total">
+           placeholder="Appointment Total" ng-model="model.appt.amount">
     <label for="appointment-date">Date of Appointment</label>
     <input pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d"
-           type="text" name="appointment-date" id="appointment-date" placeholder="MM/DD/YYYY">
-    <label for="appointment-service">Service</label>
-    <input type="text" name="appointment-service" id="appointment-service"
-           placeholder="Description of the Service">
-    <button type="submit">Add Appointments</button>
+           type="text" name="appointment-date" id="appointment-date" placeholder="MM/DD/YYYY"
+    ng-model="model.appt.appt_date">
+    <label for="appointment-note">Note</label>
+    <input type="text" name="appointment-note" id="appointment-note"
+           placeholder="Description of the Service" ng-model="model.appt.note">
+    <button ng-click="model.addAppointment(model.appt)">Add Appointments</button>
     <a href="#/appointments">Cancel</a>
   </form>
 </section>

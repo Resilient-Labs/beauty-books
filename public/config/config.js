@@ -31,7 +31,8 @@
             .when("/home", {
                 templateUrl: "views/home/home-ytd.html",
                 controller: "HomeYTDController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { currentUser: checkLoggedin }
             })
             .when("/home/week", {
                 templateUrl: "views/home/home-week.html",
@@ -83,7 +84,7 @@
       }, function(err) { console.log(err); });
   }
 
-  function checkLoggedin($q, $location, UserService) {
+  function checkLoggedin($q, $location) {
     var deferred = $q.defer();
 
     checkLoggedinService()
@@ -92,7 +93,7 @@
           $location.url('/login');
           deferred.reject();
         } else {
-          $location.url('/user/'+user._id);
+          $location.url('/home/');
           deferred.resolve(user);
         }
       });

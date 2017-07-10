@@ -17,6 +17,7 @@
           .then(function (response) {
             vm.user = response.data;
             $scope.user = response.data;
+            $scope.user.name = response.data.firstname + " " + response.data.lastname;
           })
       }
       init();
