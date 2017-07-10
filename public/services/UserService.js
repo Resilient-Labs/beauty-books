@@ -11,7 +11,8 @@
       // "deleteUser": deleteUser,
       "loginWithFacebook": loginWithFacebook,
       "loginWithGoogle":loginWithGoogle,
-      "logout":logout
+      "logout":logout,
+      "loggedin":loggedin,
     };
     return api;
 
@@ -35,6 +36,7 @@
     function logout() {
 
     }
+
     function loggedin() {
       return $http.get('/api/loggedin')
     }
