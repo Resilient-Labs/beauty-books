@@ -77,7 +77,7 @@
             })
     }
 
-  function checkLoggedinService() {
+  function checkLoggedinService($http) {
     return $http.get('/api/loggedin')
       .then(function(response) {
         return response.data;
