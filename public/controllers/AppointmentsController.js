@@ -40,7 +40,7 @@
         }
     }
 
-    function AppointmentsListController() {
+    function AppointmentsListController($http, $routeParams, $scope, $location) {
       let vm = this;
 
       function init() {

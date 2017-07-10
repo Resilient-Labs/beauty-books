@@ -80,14 +80,6 @@
             })
     }
 
-  // function checkLoggedinService(UserService) {
-  //   UserService
-  //     .loggedin()
-  //     .then(function(response) {
-  //       return response.data;
-  //     }, function(err) { console.log(err); });
-  // }
-
   function checkLoggedin($q, $location, UserService) {
     var deferred = $q.defer();
 
@@ -95,12 +87,12 @@
       .loggedin()
       .then(function (response) {
         var user = response.data;
-        console.log("log from config");
-        console.log(user);
+        // todo: double check if this response to the endpoint will ever change
         if (user.status == '-1' || user.error == "Not logged in") {
           deferred.reject();
           $location.url('/login');
-          console.log("back to logged in");
+          // todo: display some message to user showing that they have to be signed in
+          // to view certain screens
         } else {
           // $location.url('/home/');
           deferred.resolve(user);
