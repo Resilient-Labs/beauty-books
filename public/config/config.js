@@ -97,7 +97,7 @@
         var user = response.data;
         console.log("log from config");
         console.log(user);
-        if (user == '0') {
+        if (user.status == '-1' || user.error == "Not logged in") {
           deferred.reject();
           $location.url('/login');
           console.log("back to logged in");
