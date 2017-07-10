@@ -37,12 +37,14 @@
             .when("/home/week", {
                 templateUrl: "views/home/home-week.html",
                 controller: "HomeWeekController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { currentUser: checkLoggedin }
             })
             .when("/home/month", {
                 templateUrl: "views/home/home-month.html",
                 controller: "HomeMonthController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { currentUser: checkLoggedin }
             })
             // Scheduler Routes
             .when("/appointments", {
@@ -70,7 +72,8 @@
             .when("/settings", {
                 templateUrl: "views/settings/settings.html",
                 controller: "SettingsController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { currentUser: checkLoggedin }
             })
             .otherwise({
                 redirectTo: "/"
