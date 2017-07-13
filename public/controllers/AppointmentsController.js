@@ -48,8 +48,9 @@
         console.log("Appointments List Controller loaded");
         $http.get('/api/appointment')
           .then(function (response) {
-            vm.appts = response.data;
-            console.log(vm.appts);
+            let appointments = response.data;
+            vm.appts = appointments.records
+            console.log(appointments.records);
           })
       }
       init();
