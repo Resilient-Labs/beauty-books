@@ -18,7 +18,7 @@
             $http.get('/api/user')
             .then(function (response) {
               vm.user = response.data;
-              vm.user.name = response.data.firstname + " " + response.data.lastname;
+              // vm.user.name = response.data.firstname + " " + response.data.lastname;
               $scope.user = response.data;
               $scope.user.name = response.data.firstname + " " + response.data.lastname;
               console.log(vm.user);
@@ -58,6 +58,7 @@
           $http.get('/api/user')
             .then(function (response) {
               $scope.user = response.data;
+              $scope.user.name = response.data.firstname + " " + response.data.lastname;
             })
           //console.log("help");
         }

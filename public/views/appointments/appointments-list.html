@@ -17,7 +17,7 @@
   <div class="appointment">
     <label>Client Name</label>
     <label>Amount</label>
-    <p>{{ model.appointment.client }} Aubrey Plaza</p>
+    <p>{{ model.appointment.client }} Aubrey Static</p>
     <p>{{ model.appointment.amount }} $100</p>
     <label>Service</label>
     <p>{{ model.appointment.service }} Wash, Blow out, Color Correction</p>
@@ -25,15 +25,7 @@
   <div class="appointment">
     <label>Client Name</label>
     <label>Amount</label>
-    <p>{{ model.appointment.client }} Aubrey Plaza</p>
-    <p>{{ model.appointment.amount }} $100</p>
-    <label>Service</label>
-    <p>{{ model.appointment.service }} Wash, Blow out, Color Correction</p>
-  </div>
-  <div class="appointment">
-    <label>Client Name</label>
-    <label>Amount</label>
-    <p>{{ model.appointment.client }} Aubrey Plaza</p>
+    <p>{{ model.appointment.client }} Aubrey Static</p>
     <p>{{ model.appointment.amount }} $100</p>
     <label>Service</label>
     <p>{{ model.appointment.service }} Wash, Blow out, Color Correction</p>
@@ -46,6 +38,7 @@
     <p>${{ appt.amount }} </p>
     <label>Service</label>
     <p>{{ appt.note }} Wash, Blow out, Color Correction</p>
+    <p ng-bind="appt.note"></p>
   </div>
 </section>
 <footer>

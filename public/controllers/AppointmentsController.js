@@ -23,6 +23,7 @@
           $http.post('/api/appointment', appt)
             .success(function (appt) {
               console.log(appt);
+              console.log("appointment successfull added, now redrecting");
               $location.url("/appointments");
             })
             .error(function (err) {
@@ -48,6 +49,7 @@
         $http.get('/api/appointment')
           .then(function (response) {
             vm.appts = response.data;
+            console.log(vm.appts);
           })
       }
       init();
