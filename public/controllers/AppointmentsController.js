@@ -49,7 +49,7 @@
         $http.get('/api/appointment')
           .then(function (response) {
             let appointments = response.data;
-            vm.appts = appointments.records
+            vm.appts = appointments.records;
             console.log(appointments.records);
           })
       }

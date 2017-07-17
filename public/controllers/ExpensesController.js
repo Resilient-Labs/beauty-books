@@ -13,6 +13,8 @@
     vm.toggleModal=toggleModal;
     vm.showModal = false;
     vm.createExpense = createExpense;
+    vm.deleteExpense = deleteExpense;
+    vm.updateExpense = updateExpense;
 
     function init() {
       console.log("Expenses Add Controller loaded");
@@ -33,8 +35,15 @@
           } else {
             console.log(response.data);
           }
-
         })
+    }
+
+    function deleteExpense() {
+
+    }
+
+    function updateExpense() {
+
     }
 
   }
@@ -48,6 +57,12 @@
 
     function init() {
       console.log("Expenses List Controller loaded");
+      $http.get('/api/expense')
+        .then(function (response) {
+          let expensesData = response.data;
+          vm.expenses = expensesData.records;
+          console.log(expensesData.records);
+        })
     }
     init();
   }

@@ -50,23 +50,27 @@
             .when("/appointments", {
                 templateUrl: "views/appointments/appointments-list.html",
                 controller: "AppointmentsListController",
-                controllerAs: "model"
+                controllerAs: "model",
+              resolve: { currentUser: checkLoggedin }
             })
             .when("/appointments/add", {
                 templateUrl: "views/appointments/appointments-new.html",
                 controller: "AppointmentsAddController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { currentUser: checkLoggedin }
             })
             // Expenses Routes
             .when("/expenses", {
                 templateUrl: "views/expenses/expenses-list.html",
                 controller: "ExpensesListController",
-                controllerAs: "model"
+                controllerAs: "model",
+              resolve: { currentUser: checkLoggedin }
             })
             .when("/expenses/add", {
                 templateUrl: "views/expenses/expenses-new.html",
                 controller: "ExpensesAddController",
-                controllerAs: "model"
+                controllerAs: "model",
+              resolve: { currentUser: checkLoggedin }
             })
             // Settings Routes
             .when("/settings", {

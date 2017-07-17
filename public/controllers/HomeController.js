@@ -94,8 +94,7 @@
 
         function init() {
             console.log("Home YTD Controller loaded");
-
-
+          
             $http.get('/api/user')
             .then(function (response) {
               $scope.user = response.data;

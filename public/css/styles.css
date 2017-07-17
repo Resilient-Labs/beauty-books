@@ -451,6 +451,10 @@ header .logo img {
 .container-appointments div.appointment:nth-of-type(odd) {
 
 }
+.container-appointments div.appointment:last-of-type {
+    clear: both;
+    margin-bottom: 56px;
+}
 .container-appointments div.appointment label {
     /*color: #231f20;*/
     display: inline-block;
