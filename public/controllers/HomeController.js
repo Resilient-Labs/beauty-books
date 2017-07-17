@@ -57,6 +57,7 @@
             console.log("Home Month Controller loaded");
           $http.get('/api/user')
             .then(function (response) {
+              vm.user = response.data;
               $scope.user = response.data;
               $scope.user.name = response.data.firstname + " " + response.data.lastname;
             })
@@ -94,10 +95,12 @@
 
         function init() {
             console.log("Home YTD Controller loaded");
-          
+
             $http.get('/api/user')
             .then(function (response) {
+              vm.user = response.data;
               $scope.user = response.data;
+              $scope.user.name = response.data.firstname + " " + response.data.lastname;
               // vm.user = response.data;
               // console.log(vm.user);
             })

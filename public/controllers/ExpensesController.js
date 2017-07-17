@@ -8,7 +8,7 @@
    * Controls the flow of data for the expenses-annual view
    * @constructor
    */
-  function ExpensesAddController(ExpenseService, $location){
+  function ExpensesAddController(ExpenseService, $http, $routeParams, $scope, $location){
     let vm = this;
     vm.toggleModal=toggleModal;
     vm.showModal = false;
@@ -52,7 +52,7 @@
    * Controls the flow of data for the expenses-quarterly view
    * @constructor
    */
-  function ExpensesListController() {
+  function ExpensesListController($http, $routeParams, $scope, $location) {
     let vm = this;
 
     function init() {
