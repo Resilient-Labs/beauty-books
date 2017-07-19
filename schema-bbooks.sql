@@ -22,6 +22,7 @@ create table appt (appt_id int(11) auto_increment primary key,
 pro_id int(11) not null,
 appt_date datetime not null,
 amount decimal(6,3) not null,
+client varchar(64),
 note text
 ) default charset=utf8 engine=InnoDB;
 
