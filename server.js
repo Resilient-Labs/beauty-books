@@ -17,6 +17,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var striptags = require('striptags');
 
 var app = express();
+var db = mysql.createConnection(conf.DB_OPTIONS);
 
 passport.use(new FacebookStrategy({
     clientID: conf.FB_APP.clientID, //process.env.CLIENT_ID,
@@ -49,7 +50,9 @@ passport.use(new GoogleStrategy({
 // passport strategy callback. create user (pro) record if it doesn't exist
 function createOnAuth(accessToken, refreshToken, profile, cb, oauthProviderName) {
   console.log("In createOnAuth");
-  var db = mysql.createConnection(conf.DB_OPTIONS);
+  if(!db || db.state === 'disconnected') {
+    db = mysql.createConnection(conf.DB_OPTIONS);
+  }
   // todo: check email instead of or in addition to ID, in case someone tries to do BOTH FB and Goog auth.
   db.query("SELECT pro_id FROM pro WHERE oauth_id = ?", [profile.id], function(err, rows) {
     if(err) { console.log(err); return cb(err, profile); }
@@ -78,7 +81,9 @@ app.use(urlencodedParser = bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
 passport.deserializeUser(function(user, done) {
-  var db = mysql.createConnection(conf.DB_OPTIONS);
+  if(!db || db.state === 'disconnected') {
+    db = mysql.createConnection(conf.DB_OPTIONS);
+  }
   db.query("SELECT * FROM pro WHERE oauth_id = ?", [user.id], function(err, rows) {
     if(err) { done(err, null); return; }
     if(rows.length == 0) {
@@ -108,7 +113,9 @@ app.get('/app', function (req, res) {
 // optional route for mailing list signups (from placeholder landing page)
 app.post('/app/mailsignup', urlencodedParser, function (req, res) {
   console.log(req.body);
-  var db = mysql.createConnection(conf.DB_OPTIONS);
+  if(!db || db.state === 'disconnected') {
+    db = mysql.createConnection(conf.DB_OPTIONS);
+  }
   db.query("INSERT INTO prospect SET ?", { name: req.body.name, email: req.body.email }, function(err, resp) {
     if(err) {
       console.log(err);
@@ -149,9 +156,11 @@ app.get('/noauth-json', function(req, res) {
 app.post('/api/appointment',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {pro_id: req.user.pro_id, appt_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
-                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
+                  amount: Number(req.body.amount.replace(/\$/, '')), client: striptags(req.body.client), note: striptags(req.body.note)};
     db.query("INSERT INTO appt SET ?", record, function(err, result) {
       if(err) {
         console.log(err);
@@ -166,7 +175,9 @@ app.post('/api/appointment',
 app.post('/api/expense',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {pro_id: req.user.pro_id, expense_date: moment(req.body.expense_date).format('YYYY-MM-DD HH:mm:ss'),
                   amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
     db.query("INSERT INTO expense SET ?", record, function(err, result) {
@@ -184,10 +195,13 @@ app.post('/api/expense',
 app.put('/api/appointment/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {id: req.params.id, pro_id: req.user.pro_id, appt_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
-                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
-    db.query("UPDATE appt SET appt_date = ?, amount = ?, note = ? WHERE appt_id = ? AND pro_id = ?", [record.appt_date, record.amount, record.note, req.params.id, req.user.pro_id], function(err, result) {
+                  amount: Number(req.body.amount.replace(/\$/, '')), client: striptags(req.body.client), note: striptags(req.body.note)};
+    db.query("UPDATE appt SET appt_date = ?, amount = ?, client = ?, note = ? WHERE appt_id = ? AND pro_id = ?",
+             [record.appt_date, record.amount, record.client, record.note, req.params.id, req.user.pro_id], function(err, result) {
       if(err) {
         console.log(err);
         res.send(conf.defaultFailResponse);
@@ -200,7 +214,9 @@ app.put('/api/appointment/:id',
 app.put('/api/expense/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {id: req.params.id, pro_id: req.user.pro_id, expense_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
                   amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
     db.query("UPDATE expense SET expense_date = ?, amount = ?, note = ? WHERE expense_id = ? AND pro_id = ?", [record.expense_date, record.amount, record.note, req.params.id, req.user.pro_id], function(err, result) {
@@ -215,7 +231,9 @@ app.put('/api/expense/:id',
 app.put('/api/user',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {id: req.user.pro_id, pro_id: req.user.pro_id, firstname: striptags(req.body.firstname), 
                   lastname: striptags(req.body.lastname), email: striptags(req.body.email), mobile: striptags(req.body.mobile)};
     db.query("UPDATE pro SET firstname = ?, lastname = ?, email = ?, mobile = ? WHERE pro_id = ?", [record.firstname, record.lastname, record.email, req.mobile, req.user.pro_id], function(err, result) {
@@ -232,7 +250,9 @@ app.put('/api/user',
 app.delete('/api/appointment/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {id: req.params.id, pro_id: req.user.pro_id};
     db.query("DELETE FROM appt WHERE appt_id = ? AND pro_id = ?", [req.params.id, req.user.pro_id], function(err, result) {
       if(err) {
@@ -246,7 +266,9 @@ app.delete('/api/appointment/:id',
 app.delete('/api/expense/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {id: req.params.id, pro_id: req.user.pro_id};
     db.query("DELETE FROM expense WHERE expense_id = ? AND pro_id = ?", [req.params.id, req.user.pro_id], function(err, result) {
       if(err) {
@@ -262,7 +284,9 @@ app.delete('/api/expense/:id',
 app.get('/api/appointment',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM appt WHERE pro_id = ?", [req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
@@ -271,7 +295,7 @@ app.get('/api/appointment',
         var ret = [];
         for(var i in rows) {
           var appt = rows[i];
-          ret.push({ id: appt.appt_id, pro_id: req.user.pro_id, appt_date: appt.appt_date, amount: appt.amount, note: appt.note });
+          ret.push({ id: appt.appt_id, pro_id: req.user.pro_id, appt_date: appt.appt_date, amount: appt.amount, client: appt.client, note: appt.note });
         }
         res.send({ records: ret });
       } 
@@ -280,14 +304,16 @@ app.get('/api/appointment',
 app.get('/api/appointment/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM appt WHERE appt_id = ? AND pro_id = ?", [req.params.id, req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
         res.send(conf.defaultFailResponse);
       } else if(rows.length) {
         appt = rows[0];
-        res.send({ id: appt.appt_id, pro_id: req.user.pro_id, appt_date: appt.appt_date, amount: appt.amount, note: appt.note });
+        res.send({ id: appt.appt_id, pro_id: req.user.pro_id, appt_date: appt.appt_date, amount: appt.amount, client: appt.client, note: appt.note });
       } else {
         res.send({ error: "Appointment not found", status: -1 }); // 404?
       }
@@ -296,7 +322,9 @@ app.get('/api/appointment/:id',
 app.get('/api/expense',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM expense WHERE pro_id = ?", [req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
@@ -314,7 +342,9 @@ app.get('/api/expense',
 app.get('/api/expense/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM expense WHERE expense_id = ? AND pro_id = ?", [req.params.id, req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
@@ -330,7 +360,9 @@ app.get('/api/expense/:id',
 app.get('/api/user',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM pro WHERE pro_id = ?", [req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
