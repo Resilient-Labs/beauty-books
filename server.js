@@ -281,6 +281,56 @@ app.delete('/api/expense/:id',
   });
 
 // READ (GET) services
+app.get('/api/home/:from~:to/:res',
+  require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
+  function(req, res) {
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
+    db.query("SELECT * FROM appt WHERE appt_date > ? AND appt_date <= ? ORDER BY appt_date", [req.params.from, req.params.to], function(err, apptRows) {
+      if(err) {
+        console.log(err);
+        res.send(conf.defaultFailResponse);
+      } else {
+        db.query("SELECT * FROM expense WHERE expense_date > ? AND expense_date <= ? ORDER BY expense_date", [req.params.from, req.params.to], function(err, expRows) {
+          if(err) {
+            console.log(err);
+            res.send(conf.defaultFailResponse);
+          } else {
+            var cumulativeNet = 0, income = 0, expenses = 0;
+            var apptIdx = 0, expIdx = 0;
+            var timeseries = [];
+            while(apptIdx < apptRows.length || expIdx < expRows.length) {
+              if(apptRows[apptIdx] && expRows[expIdx] && apptRows[apptIdx].appt_date == expRows[expIdx].expense_date) {
+                income += apptRows[apptIdx].amount;
+                expenses += expRows[expIdx].amount;
+                cumulativeNet += apptRows[apptIdx].amount - expRows[expIdx].amount;
+                timeseries.push({t:expRows[expIdx].expense_date, v: cumulativeNet});
+                apptIdx++;
+                expIdx++;
+              } else if(apptRows[apptIdx] && (expRows[expIdx] && apptRows[apptIdx].appt_date < expRows[expIdx].expense_date || !expRows[expIdx])) {
+                income += apptRows[apptIdx].amount;
+                cumulativeNet += apptRows[apptIdx].amount;
+                timeseries.push({t:apptRows[apptIdx].appt_date, v: cumulativeNet});
+                apptIdx++;
+              } else if(expRows[expIdx] && (apptRows[apptIdx] && apptRows[apptIdx].appt_date > expRows[expIdx].expense_date || !apptRows[apptIdx])) {
+                expenses += expRows[expIdx].amount;
+                cumulativeNet -= expRows[expIdx].amount;
+                timeseries.push({t:expRows[expIdx].expense_date, v: cumulativeNet});
+                expIdx++;
+              }
+            }
+            res.send({ income: '$' + income, expenses: '$' + expenses, net: '$' + cumulativeNet,
+                       tax: '$' + (cumulativeNet * conf.defaultTaxRate).toFixed(2), timeseries: timeseries});
+          }
+        });
+      }
+    });
+    //console.log("from: " + req.params.from);
+    //console.log("to: " + req.params.to);
+    //console.log("res: " + req.params.res);
+  });
+    
 app.get('/api/appointment',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
