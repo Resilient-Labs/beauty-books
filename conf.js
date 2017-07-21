@@ -1,5 +1,6 @@
 exports.port = 3001;
 exports.defaultFailResponse = { error: "An unexpected error occurred", status: -2 };
+exports.defaultTaxRate = 0.153;
 exports.DB_OPTIONS = {
   host: "",
   database: "",
