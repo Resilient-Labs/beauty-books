@@ -330,7 +330,24 @@ app.get('/api/home/:from~:to/:res',
     //console.log("to: " + req.params.to);
     //console.log("res: " + req.params.res);
   });
-    
+app.get('/api/expense_type',
+  function(req, res) {
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
+    db.query("SELECT * FROM expense_type", [], function(err, rows) {
+      if(err) {
+        console.log(err);
+        res.send(conf.defaultFailResponse);
+      } else {
+        var ret = [];
+        for(var i in rows) {
+          ret.push({id: rows[i].expense_type_id, name: rows[i].name.replace(/&/g, '&amp;')});
+        }
+        res.send({ ret });
+      }
+    });
+  });
 app.get('/api/appointment',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
