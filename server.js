@@ -179,7 +179,7 @@ app.post('/api/expense',
       var db = mysql.createConnection(conf.DB_OPTIONS);
     }
     var record = {pro_id: req.user.pro_id, expense_date: moment(req.body.expense_date).format('YYYY-MM-DD HH:mm:ss'),
-                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
+                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note), expense_type_id: Number(req.body.expense_type_id)};
     db.query("INSERT INTO expense SET ?", record, function(err, result) {
       if(err) {
         console.log(err);
@@ -218,8 +218,9 @@ app.put('/api/expense/:id',
       var db = mysql.createConnection(conf.DB_OPTIONS);
     }
     var record = {id: req.params.id, pro_id: req.user.pro_id, expense_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
-                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
-    db.query("UPDATE expense SET expense_date = ?, amount = ?, note = ? WHERE expense_id = ? AND pro_id = ?", [record.expense_date, record.amount, record.note, req.params.id, req.user.pro_id], function(err, result) {
+                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note), expense_type_id: Number(req.body.expense_type_id)};
+    db.query("UPDATE expense SET expense_date = ?, amount = ?, note = ?, expense_type_id = ? WHERE expense_id = ? AND pro_id = ?",
+             [record.expense_date, record.amount, record.note, record.expense_type_id, req.params.id, req.user.pro_id], function(err, result) {
       if(err) {
         console.log(err);
         res.send(conf.defaultFailResponse);
@@ -400,7 +401,7 @@ app.get('/api/expense',
         var ret = [];
         for(var i in rows) {
           exp = rows[0];
-          ret.push({ id: exp.expense_id, pro_id: req.user.pro_id, expense_date: exp.expense_date, amount: exp.amount, note: exp.note });
+          ret.push({ id: exp.expense_id, pro_id: req.user.pro_id, expense_date: exp.expense_date, amount: exp.amount, note: exp.note, expense_type_id: exp.expense_type_id });
         }
         res.send({ records: ret });
       }
@@ -418,7 +419,7 @@ app.get('/api/expense/:id',
         res.send(conf.defaultFailResponse);
       } else if(rows.length) {
         exp = rows[0];
-        res.send({ id: exp.expense_id, pro_id: req.user.pro_id, expense_date: exp.expense_date, amount: exp.amount, note: exp.note });
+        res.send({ id: exp.expense_id, pro_id: req.user.pro_id, expense_date: exp.expense_date, amount: exp.amount, note: exp.note, expense_type_id: exp.expense_type_id });
       } else {
         res.send({ error: "Expense not found", status: -1 }); // 404?
       }
