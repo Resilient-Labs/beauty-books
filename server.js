@@ -285,7 +285,7 @@ app.delete('/api/expense/:id',
 app.get('/api/home/:from~:to/:res',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    if(req.params.res != 'day' && req.params.res != 'month) {
+    if(req.params.res != 'day' && req.params.res != 'month') {
       res.send({error: "Error: Time resolution parameter must be either 'day' or 'month'."});
       return;
     }
