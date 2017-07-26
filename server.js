@@ -285,6 +285,10 @@ app.delete('/api/expense/:id',
 app.get('/api/home/:from~:to/:res',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
+    if(req.params.res != 'day' && req.params.res != 'month) {
+      res.send({error: "Error: Time resolution parameter must be either 'day' or 'month'."});
+      return;
+    }
     if(!db || db.state === 'disconnected') {
       var db = mysql.createConnection(conf.DB_OPTIONS);
     }
@@ -320,6 +324,25 @@ app.get('/api/home/:from~:to/:res',
                 timeseries.push({t:expRows[expIdx].expense_date, v: cumulativeNet});
                 expIdx++;
               }
+            }
+            // if month resolution requested, go through daily time series and accumulate by month.
+            // as with day resolution, missing months are skipped (as opposed to filling in for all dates in the interval)
+            if(req.params.res == "month" && timeseries.length) {
+              var firstOfMonth = moment(timeseries[0].t).format('YYYY-MM') + '-01';
+              var mon = moment(timeseries[0].t).format('MM');
+              var monTotal = 0;
+              var monthlyTimeseries = [];
+              for(var i = 0; i < timeseries.length; i++) {
+                if(moment(timeseries[i].t).format('MM') != mon) {
+                  monthlyTimeseries.push({t:firstOfMonth, v:monTotal.toFixed(2)});
+                  mon = moment(timeseries[i].t).format('MM');
+                  firstOfMonth = moment(timeseries[i].t).format('YYYY-MM') + '-01';
+                  monTotal = 0;
+                }
+                monTotal += timeseries[i].v;
+              }
+              monthlyTimeseries.push({t:firstOfMonth, v:monTotal});
+              timeseries = monthlyTimeseries;
             }
             res.send({ income: '$' + income, expenses: '$' + expenses, net: '$' + cumulativeNet,
                        tax: '$' + (cumulativeNet * conf.defaultTaxRate).toFixed(2), timeseries: timeseries});
