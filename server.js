@@ -159,7 +159,7 @@ app.post('/api/appointment',
     if(!db || db.state === 'disconnected') {
       var db = mysql.createConnection(conf.DB_OPTIONS);
     }
-    var record = {pro_id: req.user.pro_id, appt_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
+    var record = {pro_id: req.user.pro_id, appt_date: moment(Date.parse(req.body.appt_date)).format('YYYY-MM-DD HH:mm:ss'),
                   amount: Number(req.body.amount.replace(/\$/, '')), client: striptags(req.body.client), note: striptags(req.body.note)};
     db.query("INSERT INTO appt SET ?", record, function(err, result) {
       if(err) {
@@ -178,7 +178,7 @@ app.post('/api/expense',
     if(!db || db.state === 'disconnected') {
       var db = mysql.createConnection(conf.DB_OPTIONS);
     }
-    var record = {pro_id: req.user.pro_id, expense_date: moment(req.body.expense_date).format('YYYY-MM-DD HH:mm:ss'),
+    var record = {pro_id: req.user.pro_id, expense_date: moment(Date.parse(req.body.expense_date)).format('YYYY-MM-DD HH:mm:ss'),
                   amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note), expense_type_id: Number(req.body.expense_type_id)};
     db.query("INSERT INTO expense SET ?", record, function(err, result) {
       if(err) {
@@ -198,7 +198,7 @@ app.put('/api/appointment/:id',
     if(!db || db.state === 'disconnected') {
       var db = mysql.createConnection(conf.DB_OPTIONS);
     }
-    var record = {id: req.params.id, pro_id: req.user.pro_id, appt_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
+    var record = {id: req.params.id, pro_id: req.user.pro_id, appt_date: moment(Date.parse(req.body.appt_date)).format('YYYY-MM-DD HH:mm:ss'),
                   amount: Number(req.body.amount.replace(/\$/, '')), client: striptags(req.body.client), note: striptags(req.body.note)};
     db.query("UPDATE appt SET appt_date = ?, amount = ?, client = ?, note = ? WHERE appt_id = ? AND pro_id = ?",
              [record.appt_date, record.amount, record.client, record.note, req.params.id, req.user.pro_id], function(err, result) {
@@ -217,7 +217,7 @@ app.put('/api/expense/:id',
     if(!db || db.state === 'disconnected') {
       var db = mysql.createConnection(conf.DB_OPTIONS);
     }
-    var record = {id: req.params.id, pro_id: req.user.pro_id, expense_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
+    var record = {id: req.params.id, pro_id: req.user.pro_id, expense_date: moment(Date.parse(req.body.expense_date)).format('YYYY-MM-DD HH:mm:ss'),
                   amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note), expense_type_id: Number(req.body.expense_type_id)};
     db.query("UPDATE expense SET expense_date = ?, amount = ?, note = ?, expense_type_id = ? WHERE expense_id = ? AND pro_id = ?",
              [record.expense_date, record.amount, record.note, record.expense_type_id, req.params.id, req.user.pro_id], function(err, result) {
@@ -400,7 +400,7 @@ app.get('/api/expense',
       } else {
         var ret = [];
         for(var i in rows) {
-          exp = rows[0];
+          exp = rows[i];
           ret.push({ id: exp.expense_id, pro_id: req.user.pro_id, expense_date: exp.expense_date, amount: exp.amount, note: exp.note, expense_type_id: exp.expense_type_id });
         }
         res.send({ records: ret });
