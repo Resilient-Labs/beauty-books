@@ -17,6 +17,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var striptags = require('striptags');
 
 var app = express();
+var db = mysql.createConnection(conf.DB_OPTIONS);
 
 passport.use(new FacebookStrategy({
     clientID: conf.FB_APP.clientID, //process.env.CLIENT_ID,
@@ -49,7 +50,9 @@ passport.use(new GoogleStrategy({
 // passport strategy callback. create user (pro) record if it doesn't exist
 function createOnAuth(accessToken, refreshToken, profile, cb, oauthProviderName) {
   console.log("In createOnAuth");
-  var db = mysql.createConnection(conf.DB_OPTIONS);
+  if(!db || db.state === 'disconnected') {
+    db = mysql.createConnection(conf.DB_OPTIONS);
+  }
   // todo: check email instead of or in addition to ID, in case someone tries to do BOTH FB and Goog auth.
   db.query("SELECT pro_id FROM pro WHERE oauth_id = ?", [profile.id], function(err, rows) {
     if(err) { console.log(err); return cb(err, profile); }
@@ -78,7 +81,9 @@ app.use(urlencodedParser = bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
 passport.deserializeUser(function(user, done) {
-  var db = mysql.createConnection(conf.DB_OPTIONS);
+  if(!db || db.state === 'disconnected') {
+    db = mysql.createConnection(conf.DB_OPTIONS);
+  }
   db.query("SELECT * FROM pro WHERE oauth_id = ?", [user.id], function(err, rows) {
     if(err) { done(err, null); return; }
     if(rows.length == 0) {
@@ -108,7 +113,9 @@ app.get('/app', function (req, res) {
 // optional route for mailing list signups (from placeholder landing page)
 app.post('/app/mailsignup', urlencodedParser, function (req, res) {
   console.log(req.body);
-  var db = mysql.createConnection(conf.DB_OPTIONS);
+  if(!db || db.state === 'disconnected') {
+    db = mysql.createConnection(conf.DB_OPTIONS);
+  }
   db.query("INSERT INTO prospect SET ?", { name: req.body.name, email: req.body.email }, function(err, resp) {
     if(err) {
       console.log(err);
@@ -149,9 +156,11 @@ app.get('/noauth-json', function(req, res) {
 app.post('/api/appointment',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
-    var record = {pro_id: req.user.pro_id, appt_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
-                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
+    var record = {pro_id: req.user.pro_id, appt_date: moment(Date.parse(req.body.appt_date)).format('YYYY-MM-DD HH:mm:ss'),
+                  amount: Number(req.body.amount.replace(/\$/, '')), client: striptags(req.body.client), note: striptags(req.body.note)};
     db.query("INSERT INTO appt SET ?", record, function(err, result) {
       if(err) {
         console.log(err);
@@ -166,9 +175,11 @@ app.post('/api/appointment',
 app.post('/api/expense',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
-    var record = {pro_id: req.user.pro_id, expense_date: moment(req.body.expense_date).format('YYYY-MM-DD HH:mm:ss'),
-                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
+    var record = {pro_id: req.user.pro_id, expense_date: moment(Date.parse(req.body.expense_date)).format('YYYY-MM-DD HH:mm:ss'),
+                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note), expense_type_id: Number(req.body.expense_type_id)};
     db.query("INSERT INTO expense SET ?", record, function(err, result) {
       if(err) {
         console.log(err);
@@ -184,10 +195,13 @@ app.post('/api/expense',
 app.put('/api/appointment/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
-    var record = {id: req.params.id, pro_id: req.user.pro_id, appt_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
-                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
-    db.query("UPDATE appt SET appt_date = ?, amount = ?, note = ? WHERE appt_id = ? AND pro_id = ?", [record.appt_date, record.amount, record.note, req.params.id, req.user.pro_id], function(err, result) {
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
+    var record = {id: req.params.id, pro_id: req.user.pro_id, appt_date: moment(Date.parse(req.body.appt_date)).format('YYYY-MM-DD HH:mm:ss'),
+                  amount: Number(req.body.amount.replace(/\$/, '')), client: striptags(req.body.client), note: striptags(req.body.note)};
+    db.query("UPDATE appt SET appt_date = ?, amount = ?, client = ?, note = ? WHERE appt_id = ? AND pro_id = ?",
+             [record.appt_date, record.amount, record.client, record.note, req.params.id, req.user.pro_id], function(err, result) {
       if(err) {
         console.log(err);
         res.send(conf.defaultFailResponse);
@@ -200,10 +214,13 @@ app.put('/api/appointment/:id',
 app.put('/api/expense/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
-    var record = {id: req.params.id, pro_id: req.user.pro_id, expense_date: moment(req.body.appt_date).format('YYYY-MM-DD HH:mm:ss'),
-                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note)};
-    db.query("UPDATE expense SET expense_date = ?, amount = ?, note = ? WHERE expense_id = ? AND pro_id = ?", [record.expense_date, record.amount, record.note, req.params.id, req.user.pro_id], function(err, result) {
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
+    var record = {id: req.params.id, pro_id: req.user.pro_id, expense_date: moment(Date.parse(req.body.expense_date)).format('YYYY-MM-DD HH:mm:ss'),
+                  amount: Number(req.body.amount.replace(/\$/, '')), note: striptags(req.body.note), expense_type_id: Number(req.body.expense_type_id)};
+    db.query("UPDATE expense SET expense_date = ?, amount = ?, note = ?, expense_type_id = ? WHERE expense_id = ? AND pro_id = ?",
+             [record.expense_date, record.amount, record.note, record.expense_type_id, req.params.id, req.user.pro_id], function(err, result) {
       if(err) {
         console.log(err);
         res.send(conf.defaultFailResponse);
@@ -215,7 +232,9 @@ app.put('/api/expense/:id',
 app.put('/api/user',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {id: req.user.pro_id, pro_id: req.user.pro_id, firstname: striptags(req.body.firstname), 
                   lastname: striptags(req.body.lastname), email: striptags(req.body.email), mobile: striptags(req.body.mobile)};
     db.query("UPDATE pro SET firstname = ?, lastname = ?, email = ?, mobile = ? WHERE pro_id = ?", [record.firstname, record.lastname, record.email, req.mobile, req.user.pro_id], function(err, result) {
@@ -232,7 +251,9 @@ app.put('/api/user',
 app.delete('/api/appointment/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {id: req.params.id, pro_id: req.user.pro_id};
     db.query("DELETE FROM appt WHERE appt_id = ? AND pro_id = ?", [req.params.id, req.user.pro_id], function(err, result) {
       if(err) {
@@ -246,7 +267,9 @@ app.delete('/api/appointment/:id',
 app.delete('/api/expense/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     var record = {id: req.params.id, pro_id: req.user.pro_id};
     db.query("DELETE FROM expense WHERE expense_id = ? AND pro_id = ?", [req.params.id, req.user.pro_id], function(err, result) {
       if(err) {
@@ -259,10 +282,102 @@ app.delete('/api/expense/:id',
   });
 
 // READ (GET) services
+app.get('/api/home/:from~:to/:res',
+  require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
+  function(req, res) {
+    if(req.params.res != 'day' && req.params.res != 'month) {
+      res.send({error: "Error: Time resolution parameter must be either 'day' or 'month'."});
+      return;
+    }
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
+    db.query("SELECT * FROM appt WHERE appt_date > ? AND appt_date <= ? ORDER BY appt_date", [req.params.from, req.params.to], function(err, apptRows) {
+      if(err) {
+        console.log(err);
+        res.send(conf.defaultFailResponse);
+      } else {
+        db.query("SELECT * FROM expense WHERE expense_date > ? AND expense_date <= ? ORDER BY expense_date", [req.params.from, req.params.to], function(err, expRows) {
+          if(err) {
+            console.log(err);
+            res.send(conf.defaultFailResponse);
+          } else {
+            var cumulativeNet = 0, income = 0, expenses = 0;
+            var apptIdx = 0, expIdx = 0;
+            var timeseries = [];
+            while(apptIdx < apptRows.length || expIdx < expRows.length) {
+              if(apptRows[apptIdx] && expRows[expIdx] && apptRows[apptIdx].appt_date == expRows[expIdx].expense_date) {
+                income += apptRows[apptIdx].amount;
+                expenses += expRows[expIdx].amount;
+                cumulativeNet += apptRows[apptIdx].amount - expRows[expIdx].amount;
+                timeseries.push({t:expRows[expIdx].expense_date, v: cumulativeNet});
+                apptIdx++;
+                expIdx++;
+              } else if(apptRows[apptIdx] && (expRows[expIdx] && apptRows[apptIdx].appt_date < expRows[expIdx].expense_date || !expRows[expIdx])) {
+                income += apptRows[apptIdx].amount;
+                cumulativeNet += apptRows[apptIdx].amount;
+                timeseries.push({t:apptRows[apptIdx].appt_date, v: cumulativeNet});
+                apptIdx++;
+              } else if(expRows[expIdx] && (apptRows[apptIdx] && apptRows[apptIdx].appt_date > expRows[expIdx].expense_date || !apptRows[apptIdx])) {
+                expenses += expRows[expIdx].amount;
+                cumulativeNet -= expRows[expIdx].amount;
+                timeseries.push({t:expRows[expIdx].expense_date, v: cumulativeNet});
+                expIdx++;
+              }
+            }
+            // if month resolution requested, go through daily time series and accumulate by month.
+            // as with day resolution, missing months are skipped (as opposed to filling in for all dates in the interval)
+            if(req.params.res == "month" && timeseries.length) {
+              var firstOfMonth = moment(timeseries[0].t).format('YYYY-MM') + '-01';
+              var mon = moment(timeseries[0].t).format('MM');
+              var monTotal = 0;
+              var monthlyTimeseries = [];
+              for(var i = 0; i < timeseries.length; i++) {
+                if(moment(timeseries[i].t).format('MM') != mon) {
+                  monthlyTimeseries.push({t:firstOfMonth, v:monTotal.toFixed(2)});
+                  mon = moment(timeseries[i].t).format('MM');
+                  firstOfMonth = moment(timeseries[i].t).format('YYYY-MM') + '-01';
+                  monTotal = 0;
+                }
+                monTotal += timeseries[i].v;
+              }
+              monthlyTimeseries.push({t:firstOfMonth, v:monTotal});
+              timeseries = monthlyTimeseries;
+            }
+            res.send({ income: '$' + income, expenses: '$' + expenses, net: '$' + cumulativeNet,
+                       tax: '$' + (cumulativeNet * conf.defaultTaxRate).toFixed(2), timeseries: timeseries});
+          }
+        });
+      }
+    });
+    //console.log("from: " + req.params.from);
+    //console.log("to: " + req.params.to);
+    //console.log("res: " + req.params.res);
+  });
+app.get('/api/expense_type',
+  function(req, res) {
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
+    db.query("SELECT * FROM expense_type", [], function(err, rows) {
+      if(err) {
+        console.log(err);
+        res.send(conf.defaultFailResponse);
+      } else {
+        var ret = [];
+        for(var i in rows) {
+          ret.push({id: rows[i].expense_type_id, name: rows[i].name.replace(/&/g, '&amp;')});
+        }
+        res.send({ ret });
+      }
+    });
+  });
 app.get('/api/appointment',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM appt WHERE pro_id = ?", [req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
@@ -271,7 +386,7 @@ app.get('/api/appointment',
         var ret = [];
         for(var i in rows) {
           var appt = rows[i];
-          ret.push({ id: appt.appt_id, pro_id: req.user.pro_id, appt_date: appt.appt_date, amount: appt.amount, note: appt.note });
+          ret.push({ id: appt.appt_id, pro_id: req.user.pro_id, appt_date: appt.appt_date, amount: appt.amount, client: appt.client, note: appt.note });
         }
         res.send({ records: ret });
       } 
@@ -280,14 +395,16 @@ app.get('/api/appointment',
 app.get('/api/appointment/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM appt WHERE appt_id = ? AND pro_id = ?", [req.params.id, req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
         res.send(conf.defaultFailResponse);
       } else if(rows.length) {
         appt = rows[0];
-        res.send({ id: appt.appt_id, pro_id: req.user.pro_id, appt_date: appt.appt_date, amount: appt.amount, note: appt.note });
+        res.send({ id: appt.appt_id, pro_id: req.user.pro_id, appt_date: appt.appt_date, amount: appt.amount, client: appt.client, note: appt.note });
       } else {
         res.send({ error: "Appointment not found", status: -1 }); // 404?
       }
@@ -296,7 +413,9 @@ app.get('/api/appointment/:id',
 app.get('/api/expense',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM expense WHERE pro_id = ?", [req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
@@ -304,8 +423,8 @@ app.get('/api/expense',
       } else {
         var ret = [];
         for(var i in rows) {
-          exp = rows[0];
-          ret.push({ id: exp.expense_id, pro_id: req.user.pro_id, expense_date: exp.expense_date, amount: exp.amount, note: exp.note });
+          exp = rows[i];
+          ret.push({ id: exp.expense_id, pro_id: req.user.pro_id, expense_date: exp.expense_date, amount: exp.amount, note: exp.note, expense_type_id: exp.expense_type_id });
         }
         res.send({ records: ret });
       }
@@ -314,14 +433,16 @@ app.get('/api/expense',
 app.get('/api/expense/:id',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM expense WHERE expense_id = ? AND pro_id = ?", [req.params.id, req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
         res.send(conf.defaultFailResponse);
       } else if(rows.length) {
         exp = rows[0];
-        res.send({ id: exp.expense_id, pro_id: req.user.pro_id, expense_date: exp.expense_date, amount: exp.amount, note: exp.note });
+        res.send({ id: exp.expense_id, pro_id: req.user.pro_id, expense_date: exp.expense_date, amount: exp.amount, note: exp.note, expense_type_id: exp.expense_type_id });
       } else {
         res.send({ error: "Expense not found", status: -1 }); // 404?
       }
@@ -330,7 +451,9 @@ app.get('/api/expense/:id',
 app.get('/api/user',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    var db = mysql.createConnection(conf.DB_OPTIONS);
+    if(!db || db.state === 'disconnected') {
+      var db = mysql.createConnection(conf.DB_OPTIONS);
+    }
     db.query("SELECT * FROM pro WHERE pro_id = ?", [req.user.pro_id], function(err, rows) {
       if(err) {
         console.log(err);
