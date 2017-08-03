@@ -22,11 +22,12 @@
     <label>Service</label>
     <p>{{ appt.note }} </p>
     <!--<button ng-click="model.deleteAppointment($event, )">Delete3</button>-->
-    <button ng-click="model.deleteAppointment(this)">Delete4</button>
-    <button ng-click="model.deleteAppointment(model.appts[appt])">Delete3</button>
-    <button ng-click="model.deleteAppointment(model.appts[$index])">DeleteIdxInAppts
+    <button ng-click="model.deleteAppointment(this.appt)">Delete4</button>
+    <button
+        class="delete-appt-btn"
+        ng-click="model.deleteAppointment(model.appts[$index].id)">
+      <img src="./img/circle-close-btn.png" alt="remove" />
     </button>
-    <button ng-click="model.deleteAppointment($index)">DeleteIdx</button>
   </div>
 </section>
 <footer>
