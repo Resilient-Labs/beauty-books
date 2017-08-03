@@ -135,7 +135,7 @@ app.get('/login/facebook/return',
   passport.authenticate('facebook', { scope: 'email', failureRedirect: '/' }),  // fixme: redirect to an error page if user doesn't authorize
   function(req, res) {
     console.log(req.user);
-    res.redirect('#/home');
+    res.redirect('/#/home');
 });
 
 app.get('/login/google',
