@@ -50,21 +50,21 @@
           .then(function (response) {
             let appointments = response.data;
             vm.appts = appointments.records;
-            console.log(appointments.records);
           })
       }
       init();
 
-      function deleteAppointment(appt) {
-        console.log(appt);
+      function deleteAppointment(apptId) {
+        console.log(apptId);
 
-        // $http.delete('/api/appointment/'+apptId)
-        //   .success(function (appt) {
-        //
-        //   })
-        //   .error(function (err) {
-        //     console.log("error deleting");
-        //   })
+        $http.delete('/api/appointment/'+apptId)
+          .success(function (apptId) {
+            vm.success = vm.appts[apptId] + " was successfully deleted!";
+            $location.url("/appointments");
+          })
+          .error(function (err) {
+            console.log("Error deleting this appointment");
+          })
       }
     }
 })();

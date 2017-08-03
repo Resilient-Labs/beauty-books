@@ -493,12 +493,13 @@ header .logo img {
 
 }
 .container-appointments div.appointment button.delete-appt-btn {
-    height: 30px;
+    background: none;
+    height: 40px;
+    padding: 5px;
     position: absolute;
     right: 0;
-    /*text-decoration: none;*/
     top: 0;
-    width: 30px;
+    width: 40px;
 }
 .container-appointments div.appointment button.delete-appt-btn img {
     height: 100%;

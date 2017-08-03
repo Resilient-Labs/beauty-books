@@ -21,8 +21,6 @@
     <p>${{ appt.amount }} </p>
     <label>Service</label>
     <p>{{ appt.note }} </p>
-    <!--<button ng-click="model.deleteAppointment($event, )">Delete3</button>-->
-    <button ng-click="model.deleteAppointment(this.appt)">Delete4</button>
     <button
         class="delete-appt-btn"
         ng-click="model.deleteAppointment(model.appts[$index].id)">
