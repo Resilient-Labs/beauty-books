@@ -55,8 +55,8 @@
       }
       init();
 
-      function deleteAppointment(e) {
-        console.log(e.currentTarget);
+      function deleteAppointment(appt) {
+        console.log(appt);
 
         // $http.delete('/api/appointment/'+apptId)
         //   .success(function (appt) {

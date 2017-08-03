@@ -144,7 +144,7 @@ app.get('/login/google/return',
   passport.authenticate('google', { scope: 'email', failureRedirect: '/' }),
   function(req, res) {
     console.log(req.user);
-    res.redirect('#/home');
+    res.redirect('/#/home');
 });
 
 // universal redirect for not-logged-in case
