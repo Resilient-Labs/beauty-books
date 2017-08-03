@@ -14,6 +14,9 @@
     </a>
   </div>
   <h2>Appointments</h2>
+  <div ng-show="model.success" class="alert alert-danger" role="alert">
+    {{model.success}}
+  </div>
   <div class="appointment" ng-repeat="appt in model.appts">
     <label>Client Name</label>
     <label>Amount</label>

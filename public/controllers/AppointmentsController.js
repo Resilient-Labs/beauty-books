@@ -59,7 +59,9 @@
 
         $http.delete('/api/appointment/'+apptId)
           .success(function (apptId) {
-            vm.success = vm.appts[apptId] + " was successfully deleted!";
+            console.log("successfully deleted that old appointment for " + vm.appts[apptId] + "!");
+            vm.success = "Appointment for: " + vm.appts[apptId].client + " was" +
+              " successfully deleted!";
             $location.url("/appointments");
           })
           .error(function (err) {
