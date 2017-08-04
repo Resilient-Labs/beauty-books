@@ -85,6 +85,7 @@
     }
 
   function checkLoggedin($q, $location, UserService) {
+      let vm = this;
     var deferred = $q.defer();
 
     UserService
@@ -94,6 +95,7 @@
         // todo: double check if this response to the endpoint will ever change
         if (user.status == '-1' || user.error == "Not logged in") {
           deferred.reject();
+          vm.error = "Please log in";
           $location.url('/login');
           // todo: display some message to user showing that they have to be signed in
           // to view certain screens
