@@ -10,15 +10,21 @@
     <h2>New Expenses</h2>
     <form>
         <label for="expense-type">Expense Type</label>
+        <!--<select name="expense-type" id="expense-type">-->
+            <!--<option value="" disabled selected>Select the expense type</option>-->
+            <!--<option value="advertising">Advertising</option>-->
+            <!--<option value="assets">Assets</option>-->
+            <!--<option value="commissions">Commissions</option>-->
+            <!--<option value="insurance">Insurance</option>-->
+            <!--<option value="materials-supplies">Materials & Supplies</option>-->
+            <!--<option value="meals-entertainment">Meals & Entertainment</option>-->
+            <!--<option value="professional-services">Professional Services</option>-->
+        <!--</select>-->
         <select name="expense-type" id="expense-type">
             <option value="" disabled selected>Select the expense type</option>
-            <option value="advertising">Advertising</option>
-            <option value="assets">Assets</option>
-            <option value="commissions">Commissions</option>
-            <option value="insurance">Insurance</option>
-            <option value="materials-supplies">Materials & Supplies</option>
-            <option value="meals-entertainment">Meals & Entertainment</option>
-            <option value="professional-services">Professional Services</option>
+            <option ng-selected=""
+            ng-repeat="type in model.expenseTypes"
+            ng-value="type.id">{{type.name}}</option>
         </select>
         <label for="expense-total">Expense Total</label>
         <input type="text" name="expense-total" id="expense-total"
