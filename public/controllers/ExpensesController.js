@@ -55,34 +55,26 @@
 
     function init() {
       console.log("Expenses List Controller loaded");
+      let expenseTypesHolder, expensesHolder;
 
       $http.get('/api/expense_type')
         .then(function (response) {
           let expensesData = response.data;
-          console.log(expensesData.ret);
+          // console.log(expensesData.ret);
           vm.expenseTypes = expensesData.ret;
-        })
+          expenseTypesHolder = expensesData.ret;
+        });
 
       $http.get('/api/expense')
         .then(function (response) {
           let expenses = response.data;
-          console.log(expenses);
+          // console.log(expenses);
           vm.expenses = expenses.records;
-        })
+          expensesHolder = expenses.records;
+        });
       
-      console.log("calc expenses");
-      for (var expense in vm.expenses) {
-        let exp = vm.expenses[expense];
-        console.log("calc expenses first loop");
-        for (var type in vm.expenseTypes) {
-          console.log("calc expenses second loop");
-          let expType = vm.expenseTypes[type];
-          console.log(expType);
-          if (expType == exp.expense_type_id) {
-            vm.expenseTypes[type].totalAmount += exp.amount;
-          }
-        }
-      }
+      console.log(expensesHolder);
+      console.log(expenseTypesHolder);
       // calculateExpenseTotals();
     }
 
@@ -90,7 +82,18 @@
 
     function calculateExpenseTotals() {
       console.log("calc expenses");
-
+      for (var expense in vm.expenses) {
+        let exp = vm.expenses[expense];
+        console.log("calc expenses first loop");
+        for (var type in vm.expenseTypes) {
+          console.log("calc expenses first loop");
+          let expType = vm.expenseTypes[type];
+          console.log(expType);
+          if (expType == exp.expense_type_id) {
+            vm.expenseTypes[type].totalAmount += exp.amount;
+          }
+        }
+      }
     }
 
   }
