@@ -52,10 +52,10 @@
    */
   function ExpensesListController($http, $routeParams, $scope, $location) {
     let vm = this;
+    let expenseTypesHolder, expensesHolder;
 
     function init() {
       console.log("Expenses List Controller loaded");
-      let expenseTypesHolder, expensesHolder;
 
       $http.get('/api/expense_type')
         .then(function (response) {
@@ -72,13 +72,13 @@
           vm.expenses = expenses.records;
           expensesHolder = expenses.records;
         });
-      
-      console.log(expensesHolder);
-      console.log(expenseTypesHolder);
+
       // calculateExpenseTotals();
     }
 
     init();
+    console.log(expensesHolder);
+    console.log(expenseTypesHolder);
 
     function calculateExpenseTotals() {
       console.log("calc expenses");
