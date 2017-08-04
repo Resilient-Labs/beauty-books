@@ -18,6 +18,14 @@
 
     function init() {
       console.log("Expenses Add Controller loaded");
+
+      $http.get('/api/expense_type')
+        .then(function (response) {
+          let expensesData = response.data;
+          console.log(expensesData);
+          console.log(expensesData.ret);
+          vm.expenseTypes = expensesData.ret;
+        })
     }
     init();
 
