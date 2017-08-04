@@ -79,8 +79,9 @@
       console.log("calc expenses");
       for (var expense in vm.expenses) {
         let exp = vm.expenses[expense];
-
+        console.log("calc expenses first loop");
         for (var type in vm.expenseTypes) {
+          console.log("calc expenses second loop");
           let expType = vm.expenseTypes[type];
           console.log(expType);
           if (expType == exp.expense_type_id) {
