@@ -69,9 +69,13 @@
           console.log(expenses);
           vm.expenses = expenses.records;
         })
+
+      calculateExpenseTotals();
     }
+
     init();
 
+    function calculateExpenseTotals() {
 
       for (var expense in vm.expenses.records) {
         let exp = vm.expenses.records[expense];
@@ -82,8 +86,10 @@
           if (expType == exp.expense_type_id) {
             vm.expenseTypes[type].totalAmount += exp.amount;
           }
+        }
       }
     }
+
   }
 
 })();
