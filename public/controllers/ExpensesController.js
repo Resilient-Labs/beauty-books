@@ -69,13 +69,7 @@
           console.log(expenses);
           vm.expenses = expenses.records;
         })
-
-      calculateExpenseTotals();
-    }
-
-    init();
-
-    function calculateExpenseTotals() {
+      
       console.log("calc expenses");
       for (var expense in vm.expenses) {
         let exp = vm.expenses[expense];
@@ -89,6 +83,14 @@
           }
         }
       }
+      // calculateExpenseTotals();
+    }
+
+    init();
+
+    function calculateExpenseTotals() {
+      console.log("calc expenses");
+
     }
 
   }
