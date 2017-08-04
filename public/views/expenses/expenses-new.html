@@ -22,11 +22,12 @@
         </select>
         <label for="expense-total">Expense Total</label>
         <input type="text" name="expense-total" id="expense-total"
-               placeholder="Expense Total">
+               placeholder="Expense Total" ng-model="model.expense.amount">
         <label for="expense-date">Date of Expense</label>
         <input pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d"
-            type="text" name="expense-date" id="expense-date" placeholder="MM/DD/YYYY">
-        <button type="submit">Add Expense</button>
+            type="text" name="expense-date" id="expense-date" placeholder="MM/DD/YYYY"
+        ng-model="model.expense.expense_date">
+        <button ng-click="model.createExpense(model.expense)">Add Expense</button>
         <a href="#/expenses">Cancel</a>
     </form>
 </section>
