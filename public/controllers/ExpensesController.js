@@ -62,7 +62,7 @@
         .then(function (response) {
           let expensesData = response.data;
           console.log(expensesData);
-          vm.expenseTypes = expensesData.records;
+          vm.expenseTypes = expensesData.records.ret;
         })
       console.log(vm.expenseTypes);
     }
