@@ -52,7 +52,7 @@
    */
   function ExpensesListController($http, $routeParams, $scope, $location) {
     let vm = this;
-    let amounts = {
+    $scope.amounts = {
       advertising: { id: 2, total: 0, },
       assets: { id: 3, total: 0, },
       commissions: { id: 4, total: 0, },
@@ -81,13 +81,13 @@
           vm.expenses = expenses.records;
           for (var expense in vm.expenses) {
             let exp = vm.expenses[expense];
-            for (var amount in amounts) {
-              if (exp.expense_type_id == amounts[amount].id) {
-                amounts[amount].total += exp.amount;
+            for (var amount in $scope.amounts) {
+              if (exp.expense_type_id == $scope.amounts[amount].id) {
+                $scope.amounts[amount].total += exp.amount;
                 console.log("added");
               }
             }
-            console.log(amounts);
+            console.log($scope.amounts);
           }
 
         });

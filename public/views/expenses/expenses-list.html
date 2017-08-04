@@ -15,7 +15,11 @@
     </div>
     <h2>Expenses</h2>
     <ul class="expense">
-        <li ng-repeat="expType in model.expenseTypes">{{expType.name}}<span></span></li>
+        <!--<li ng-repeat="expType in model.expenseTypes">{{expType.name}}<span></span></li>-->
+        <li ng-repeat="expense in amounts">
+            {{expense[$index]}}
+            <span>{{expense[$index].total}}</span>
+        </li>
     </ul>
 </section>
 <footer>
