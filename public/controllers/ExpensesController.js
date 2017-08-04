@@ -52,17 +52,16 @@
    */
   function ExpensesListController($http, $routeParams, $scope, $location) {
     let vm = this;
-    let expenseTypesHolder, expensesHolder;
     let amounts = {
-      advertising: { id: 1, amount: 0, },
-      assets: { id: 1, amount: 0, },
-      commissions: { id: 1, amount: 0, },
-      communication: { id: 1, amount: 0, },
-      insurance: { id: 1, amount: 0, },
-      materialsSupplies: { id: 1, amount: 0, },
-      mealsEntertainment: { id: 1, amount: 0, },
-      other: { id: 9, amount: 0, },
-      professionalServices: { id: 8, amount: 0, },
+      advertising: { id: 2, total: 0, },
+      assets: { id: 3, total: 0, },
+      commissions: { id: 4, total: 0, },
+      communication: { id: 1, total: 0, },
+      insurance: { id: 5, total: 0, },
+      materialsSupplies: { id: 6, total: 0, },
+      mealsEntertainment: { id: 7, total: 0, },
+      other: { id: 9, total: 0, },
+      professionalServices: { id: 8, total: 0, },
     };
 
     function init() {
@@ -73,7 +72,6 @@
           let expensesData = response.data;
           console.log(expensesData.ret);
           vm.expenseTypes = expensesData.ret;
-          // expenseTypesHolder = expensesData.ret;
         });
 
       $http.get('/api/expense')
@@ -81,7 +79,17 @@
           let expenses = response.data;
           console.log(expenses);
           vm.expenses = expenses.records;
-          // expensesHolder = expenses.records;
+          for (var expense in vm.expenses) {
+            let exp = vm.expenses[expense];
+            for (var amount in amounts) {
+              if (exp.expense_type_id == amounts[amount].id) {
+                amounts[amount].total += exp.amount;
+                console.log("added");
+              }
+            }
+            console.log(amounts);
+          }
+
         });
 
       // calculateExpenseTotals();
