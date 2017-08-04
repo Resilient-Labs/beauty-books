@@ -14,18 +14,18 @@
         </a>
     </div>
     <h2>Expenses</h2>
-    <ul>
-        <li>Advertising <span>$49</span></li>
-        <li>Assets <span>$319</span></li>
-        <li>Commissions <span>$27</span></li>
-        <li>Insurance <span>$81</span></li>
-        <li>Materials & Supplies <span>$69</span></li>
-        <li>Meals & Entertainment <span>$19</span></li>
-        <li>Professional Services <span>$33</span></li>
+    <!--<ul>-->
+        <!--<li>Advertising <span>$49</span></li>-->
+        <!--<li>Assets <span>$319</span></li>-->
+        <!--<li>Commissions <span>$27</span></li>-->
+        <!--<li>Insurance <span>$81</span></li>-->
+        <!--<li>Materials & Supplies <span>$69</span></li>-->
+        <!--<li>Meals & Entertainment <span>$19</span></li>-->
+        <!--<li>Professional Services <span>$33</span></li>-->
+    <!--</ul>-->
+    <ul class="expense" ng-repeat="expType in model.expenseTypes">
+        <li>{{expType.name}} <span>$49</span></li>
     </ul>
-    <div class="expense" ng-repeat="expType in model.expenseTypes">
-        <p>{{expType.name}}</p>
-    </div>
 </section>
 <footer>
     <nav>
