@@ -26,7 +26,7 @@
     <p>{{ appt.note }} </p>
     <button
         class="delete-appt-btn"
-        ng-click="model.deleteAppointment(model.appts[$index].id)">
+        ng-click="model.deleteAppointment(model.appts[$index].id, $index)">
       <img src="./img/circle-close-btn.png" alt="remove" />
     </button>
   </div>
