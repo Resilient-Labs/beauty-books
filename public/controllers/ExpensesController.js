@@ -53,6 +53,17 @@
   function ExpensesListController($http, $routeParams, $scope, $location) {
     let vm = this;
     let expenseTypesHolder, expensesHolder;
+    let amounts = {
+      advertising: { id: 1, amount: 0, },
+      assets: { id: 1, amount: 0, },
+      commissions: { id: 1, amount: 0, },
+      communication: { id: 1, amount: 0, },
+      insurance: { id: 1, amount: 0, },
+      materialsSupplies: { id: 1, amount: 0, },
+      mealsEntertainment: { id: 1, amount: 0, },
+      other: { id: 9, amount: 0, },
+      professionalServices: { id: 8, amount: 0, },
+    };
 
     function init() {
       console.log("Expenses List Controller loaded");
@@ -60,25 +71,25 @@
       $http.get('/api/expense_type')
         .then(function (response) {
           let expensesData = response.data;
-          // console.log(expensesData.ret);
+          console.log(expensesData.ret);
           vm.expenseTypes = expensesData.ret;
-          expenseTypesHolder = expensesData.ret;
+          // expenseTypesHolder = expensesData.ret;
         });
 
       $http.get('/api/expense')
         .then(function (response) {
           let expenses = response.data;
-          // console.log(expenses);
+          console.log(expenses);
           vm.expenses = expenses.records;
-          expensesHolder = expenses.records;
+          // expensesHolder = expenses.records;
         });
 
       // calculateExpenseTotals();
     }
 
     init();
-    console.log(expensesHolder);
-    console.log(expenseTypesHolder);
+    // console.log(expensesHolder);
+    // console.log(expenseTypesHolder);
 
     function calculateExpenseTotals() {
       console.log("calc expenses");
