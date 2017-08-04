@@ -77,8 +77,8 @@
 
     function calculateExpenseTotals() {
 
-      for (var expense in vm.expenses.records) {
-        let exp = vm.expenses.records[expense];
+      for (var expense in vm.expenses) {
+        let exp = vm.expenses[expense];
 
         for (var type in vm.expenseTypes) {
           let expType = vm.expenseTypes[type];
