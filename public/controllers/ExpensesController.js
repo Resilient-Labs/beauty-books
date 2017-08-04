@@ -52,17 +52,17 @@
    */
   function ExpensesListController($http, $routeParams, $scope, $location) {
     let vm = this;
-    $scope.amounts = {
-      advertising: { id: 2, total: 0, },
-      assets: { id: 3, total: 0, },
-      commissions: { id: 4, total: 0, },
-      communication: { id: 1, total: 0, },
-      insurance: { id: 5, total: 0, },
-      materialsSupplies: { id: 6, total: 0, },
-      mealsEntertainment: { id: 7, total: 0, },
-      other: { id: 9, total: 0, },
-      professionalServices: { id: 8, total: 0, },
-    };
+    $scope.amounts = [
+      { id: 2, total: 0, type: "Advertising", },
+      { id: 3, total: 0, type: "Assets"},
+      { id: 4, total: 0, type: "Commissions"},
+      { id: 1, total: 0, type: "Communication"},
+      { id: 5, total: 0, type: "Insurance"},
+      { id: 6, total: 0, type: "Materials & Supples"},
+      { id: 7, total: 0, type: "Meals & Entertainment"},
+      { id: 9, total: 0, type: "Other"},
+      { id: 8, total: 0, type: "Professional Services"},
+    ];
 
     function init() {
       console.log("Expenses List Controller loaded");
