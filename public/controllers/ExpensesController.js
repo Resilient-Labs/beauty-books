@@ -10,8 +10,6 @@
    */
   function ExpensesAddController(ExpenseService, $http, $routeParams, $scope, $location){
     let vm = this;
-    // vm.toggleModal=toggleModal;
-    // vm.showModal = false;
     vm.createExpense = createExpense;
     vm.deleteExpense = deleteExpense;
     vm.updateExpense = updateExpense;
@@ -22,22 +20,16 @@
       $http.get('/api/expense_type')
         .then(function (response) {
           let expensesData = response.data;
-          console.log(expensesData);
-          console.log(expensesData.ret);
           vm.expenseTypes = expensesData.ret;
         })
     }
     init();
 
-    // function toggleModal(){
-    //   console.log("works");
-    //   vm.showModal=!vm.showModal
-    // }
-    
     function createExpense(expense) {
       $http.post('/api/expense', expense)
         .success(function (expense) {
-          console.log(expense + " was created");
+          console.log("expense was created");
+          console.log(expense);
           $location.url("/expenses");
         })
         .error(function (err) {
