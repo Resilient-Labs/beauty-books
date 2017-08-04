@@ -55,7 +55,7 @@
       init();
 
       function deleteAppointment(apptId) {
-        console.log(vm.appts[apptId]);
+        console.log(vm.appts);
         let deletedClientName = "boop"; //vm.appts[apptId].client;
 
         $http.delete('/api/appointment/'+apptId)
