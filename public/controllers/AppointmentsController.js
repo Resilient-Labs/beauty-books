@@ -61,7 +61,7 @@
           .success(function (apptId, arrIdx) {
             vm.success = "Appointment for: " + deletedClientName + " was" +
               " successfully deleted!";
-            vm.appts.splice(arrIdx,1);
+            $scope.appts.splice(arrIdx,1);
             $location.url("/appointments");
           })
           .error(function (err) {

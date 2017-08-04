@@ -57,12 +57,14 @@
 
     function init() {
       console.log("Expenses List Controller loaded");
-      $http.get('/api/expense')
+
+      $http.get('/api/expense_type')
         .then(function (response) {
           let expensesData = response.data;
-          vm.expenses = expensesData.records;
-          console.log(expensesData.records);
+          console.log(expensesData);
+          vm.expenseTypes = expensesData.records;
         })
+      console.log(vm.expenseTypes);
     }
     init();
   }

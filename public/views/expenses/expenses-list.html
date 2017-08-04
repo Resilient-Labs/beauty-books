@@ -23,6 +23,9 @@
         <li>Meals & Entertainment <span>$19</span></li>
         <li>Professional Services <span>$33</span></li>
     </ul>
+    <div class="expense" ng-repeat="expType in model.expenseTypes">
+        <p>{{expType}}</p>
+    </div>
 </section>
 <footer>
     <nav>
