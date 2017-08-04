@@ -28,8 +28,6 @@
     function createExpense(expense) {
       $http.post('/api/expense', expense)
         .success(function (expense) {
-          console.log("expense was created");
-          console.log(expense);
           $location.url("/expenses");
         })
         .error(function (err) {
@@ -61,7 +59,6 @@
       $http.get('/api/expense_type')
         .then(function (response) {
           let expensesData = response.data;
-          console.log(expensesData);
           console.log(expensesData.ret);
           vm.expenseTypes = expensesData.ret;
         })
@@ -70,9 +67,23 @@
         .then(function (response) {
           let expenses = response.data;
           console.log(expenses);
+          vm.expenses = expenses.records;
         })
     }
     init();
+
+
+      for (var expense in vm.expenses.records) {
+        let exp = vm.expenses.records[expense];
+
+        for (var type in vm.expenseTypes) {
+          let expType = vm.expenseTypes[type];
+          console.log(expType);
+          if (expType == exp.expense_type_id) {
+            vm.expenseTypes[type].totalAmount += exp.amount;
+          }
+      }
+    }
   }
 
 })();
