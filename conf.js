@@ -1,6 +1,8 @@
 exports.port = 3001;
 exports.defaultFailResponse = { error: "An unexpected error occurred", status: -2 };
 exports.defaultTaxRate = 0.153;
+// on home view, if range to be displayed is larger than this number of days, use month resolution instead of day
+exports.MONTH_RESOLUTION_THRESHOLD = 120;
 exports.DB_OPTIONS = {
   host: "",
   database: "",

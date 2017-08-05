@@ -282,22 +282,40 @@ app.delete('/api/expense/:id',
   });
 
 // READ (GET) services
-app.get('/api/home/:from~:to/:res',
+app.get('/api/home/:range',
   require('connect-ensure-login').ensureLoggedIn('/noauth-json'),
   function(req, res) {
-    if(req.params.res != 'day' && req.params.res != 'month) {
-      res.send({error: "Error: Time resolution parameter must be either 'day' or 'month'."});
+    var endDate = moment().add(1, 'day').format('YYYY-MM-DD');
+    // compute start date based on range param
+    var startDateMap = {
+      "w": function() { return moment().subtract(7, 'day').format('YYYY-MM-DD'); },
+      // if it's the first of the month, mtd gives the full past month
+      "mtd": function() { return moment().format('DD') == '01' ? moment().subtract(1, 'month').format('YYYY-MM-01') : moment().format('YYYY-MM-01'); },
+      "m": function() { return moment().subtract(1, 'month').format('YYYY-MM-DD'); },
+      // if it's the first of the year, ytd gives the full past year
+      "ytd": function() { return moment().format('MM-DD') == '01-01' ? moment().subtract(1, 'year').format('YYYY-01-01') : moment().format('YYYY-01-01'); },
+      "y": function() {return moment().subtract(1, 'year').format('YYYY-MM-DD'); }
+    }
+    if(!startDateMap[req.params.range]) {
+      res.send({error: "Error: Time range parameter must be w/mtd/m/ytd/y."});
       return;
+    }
+    var startDate = startDateMap[req.params.range]();
+    var resolution = 'day';
+    if(moment(endDate).diff(moment(startDate), 'days') + 1 > conf.MONTH_RESOLUTION_THRESHOLD) {
+      resolution = 'month';
     }
     if(!db || db.state === 'disconnected') {
       var db = mysql.createConnection(conf.DB_OPTIONS);
     }
-    db.query("SELECT * FROM appt WHERE appt_date > ? AND appt_date <= ? ORDER BY appt_date", [req.params.from, req.params.to], function(err, apptRows) {
+    db.query("SELECT * FROM appt WHERE pro_id = ? AND appt_date > ? AND appt_date <= ? ORDER BY appt_date",
+             [req.user.pro_id, startDate, endDate], function(err, apptRows) {
       if(err) {
         console.log(err);
         res.send(conf.defaultFailResponse);
       } else {
-        db.query("SELECT * FROM expense WHERE expense_date > ? AND expense_date <= ? ORDER BY expense_date", [req.params.from, req.params.to], function(err, expRows) {
+        db.query("SELECT * FROM expense WHERE pro_id = ? AND expense_date > ? AND expense_date <= ? ORDER BY expense_date",
+                 [req.user.pro_id, startDate, endDate], function(err, expRows) {
           if(err) {
             console.log(err);
             res.send(conf.defaultFailResponse);
@@ -325,10 +343,10 @@ app.get('/api/home/:from~:to/:res',
                 expIdx++;
               }
             }
-            // if month resolution requested, go through daily time series and accumulate by month.
+            // if month resolution, go through daily time series and accumulate by month.
             // as with day resolution, missing months are skipped (as opposed to filling in for all dates in the interval)
-            if(req.params.res == "month" && timeseries.length) {
-              var firstOfMonth = moment(timeseries[0].t).format('YYYY-MM') + '-01';
+            if(resolution == "month" && timeseries.length) {
+              var firstOfMonth = moment(timeseries[0].t).format('YYYY-MM-01');
               var mon = moment(timeseries[0].t).format('MM');
               var monTotal = 0;
               var monthlyTimeseries = [];
@@ -336,7 +354,7 @@ app.get('/api/home/:from~:to/:res',
                 if(moment(timeseries[i].t).format('MM') != mon) {
                   monthlyTimeseries.push({t:firstOfMonth, v:monTotal.toFixed(2)});
                   mon = moment(timeseries[i].t).format('MM');
-                  firstOfMonth = moment(timeseries[i].t).format('YYYY-MM') + '-01';
+                  firstOfMonth = moment(timeseries[i].t).format('YYYY-MM-01');
                   monTotal = 0;
                 }
                 monTotal += timeseries[i].v;
@@ -344,15 +362,12 @@ app.get('/api/home/:from~:to/:res',
               monthlyTimeseries.push({t:firstOfMonth, v:monTotal});
               timeseries = monthlyTimeseries;
             }
-            res.send({ income: '$' + income, expenses: '$' + expenses, net: '$' + cumulativeNet,
-                       tax: '$' + (cumulativeNet * conf.defaultTaxRate).toFixed(2), timeseries: timeseries});
+            res.send({ income: '$' + income, expenses: '$' + expenses, net: (cumulativeNet < 0 ? '-' : '' ) + '$' + Math.abs(cumulativeNet),
+                       tax: '$' + Math.max(0, (cumulativeNet * conf.defaultTaxRate).toFixed(2)), timeseries: timeseries});
           }
         });
       }
     });
-    //console.log("from: " + req.params.from);
-    //console.log("to: " + req.params.to);
-    //console.log("res: " + req.params.res);
   });
 app.get('/api/expense_type',
   function(req, res) {
