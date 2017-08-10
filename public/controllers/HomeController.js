@@ -135,6 +135,8 @@
           .success(function (response) {
             let data = response;
             console.log(data);
+            vm.tax = data.tax;
+            vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
             $scope.income = response.income;
             $scope.tax = response.tax;
