@@ -218,7 +218,7 @@
         // Configuration options go here
         options: {}
       });
-      
+
       /**
        * update the chart after the timesToPlot has updated
        */
@@ -226,7 +226,7 @@
         console.log($scope.timesToPlot);
         let dns = findDataNodeInThisMonth();
         for (let dn in dns) {
-          chart.data.datasets.push(dns[dn]);
+          chart.data.datasets[0].data.push(dns[dn]);
         }
         chart.update();
       })
