@@ -3,6 +3,7 @@
         .module("BeautyBooks")
         .controller("HomeWeekController", HomeWeekController)
         .controller("HomeMonthController", HomeMonthController)
+        .controller("HomeYearController", HomeYearController)
         .controller("HomeYTDController", HomeYTDController);
 
     /*
@@ -191,7 +192,10 @@
       function findDataNodeInThisMonth() {
         let arr = [];
         for (let t in timesToPlot) {
-          arr.push(timesToPlot[t].v)
+          arr.push(timesToPlot[t].v);
+          console.log(timesToPlot[t].v);
+          console.log("urgh");
+          console.log(timesToPlot[t][v]);
         }
         return arr;
       }
