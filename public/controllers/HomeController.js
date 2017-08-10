@@ -11,6 +11,7 @@
      */
     function HomeWeekController($http, $routeParams, $scope) {
         let vm = this;
+        vm.getWeek = getWeek;
 
         function init() {
             console.log("Home Week Controller loaded");
@@ -25,6 +26,17 @@
             })
         }
         init();
+        getWeek();
+
+        function getWeek() {
+          $http.get('/api/home/y')
+            .success(function (response) {
+              console.log(response.data);
+            })
+            .error(function (err) {
+              console.log("error");
+            })
+        }
       var ctx = document.getElementById('weeklyChart').getContext('2d');
       var chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -52,6 +64,7 @@
      */
     function HomeMonthController($http, $routeParams, $scope) {
         let vm = this;
+        vm.getMonth = getMonth;
 
         function init() {
             console.log("Home Month Controller loaded");
@@ -64,6 +77,17 @@
           //console.log("help");
         }
         init();
+        getMonth();
+
+      function getMonth() {
+        $http.get('/api/home/m')
+          .success(function (response) {
+            console.log(response.data);
+          })
+          .error(function (err) {
+            console.log("error");
+          })
+      }
 
       var ctx = document.getElementById('monthlyChart').getContext('2d');
       var chart = new Chart(ctx, {
@@ -92,6 +116,7 @@
      */
     function HomeYTDController($http, $routeParams, $scope, currentUser) {
         let vm = this;
+        vm.getYtd = getYtd;
 
         function init() {
             console.log("Home YTD Controller loaded");
@@ -106,6 +131,17 @@
             })
         }
         init();
+        getYtd();
+
+      function getYtd() {
+        $http.get('/api/home/ytd')
+          .success(function (response) {
+            console.log(response.data);
+          })
+          .error(function (err) {
+            console.log("error");
+          })
+      }
 
       var ctx = document.getElementById('yearlyChart').getContext('2d');
       var chart = new Chart(ctx, {

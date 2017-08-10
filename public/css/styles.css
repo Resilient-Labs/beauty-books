@@ -222,9 +222,10 @@ header .logo img {
 }
 .container-login div a button {
     margin: 0 auto;
+    max-width: 400px;
     min-height: 45px;
-    min-width: 66vw;
     text-transform: uppercase;
+    width: 66vw;
 }
 .container-login div a#login-facebook button {
     background-color: #3B5998;
