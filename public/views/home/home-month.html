@@ -7,18 +7,16 @@
     </a>
 </header>
 <section class="container-home">
-    <p>Hello <span ng-bind="model.user.name"></span> view your monthly growth in
-        business below</p>
-    <span ng-bind="model.user.name"></span>
+    <p>Cumulative Net Income:</p>
     <div class="home-buttons">
-        <a href="#/home/week">
-            <button>Wk</button>
-        </a>
         <a href="#/home/month">
-            <button class="active">Mo</button>
+            <button>Mo</button>
+        </a>
+        <a href="#/home/year">
+            <button class="active">Y</button>
         </a>
         <a href="#/home">
-            <button>Yr</button>
+            <button>YTD</button>
         </a>
     </div>
     <canvas id="monthlyChart"></canvas>

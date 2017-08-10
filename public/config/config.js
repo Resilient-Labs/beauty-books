@@ -46,6 +46,12 @@
                 controllerAs: "model",
                 resolve: { currentUser: checkLoggedin }
             })
+          .when("/home/year", {
+            templateUrl: "views/home/home-year.html",
+            controller: "HomeYearController",
+            controllerAs: "model",
+            resolve: { currentUser: checkLoggedin }
+          })
             // Scheduler Routes
             .when("/appointments", {
                 templateUrl: "views/appointments/appointments-list.html",
