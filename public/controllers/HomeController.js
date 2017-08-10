@@ -138,8 +138,8 @@
             vm.tax = data.tax;
             vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
-            $scope.income = response.income;
-            $scope.tax = response.tax;
+            $scope.income = data.income;
+            $scope.tax = data.tax;
           })
           .error(function (err) {
             console.log("error");
