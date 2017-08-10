@@ -124,8 +124,7 @@
               vm.user = response.data;
               $scope.user = response.data;
               $scope.user.name = response.data.firstname + " " + response.data.lastname;
-            })
-          //console.log("help");
+            });
         }
         init();
         getMonth();
@@ -136,7 +135,9 @@
           .success(function (response) {
             let data = response;
             console.log(data);
-            timesToPlot = data.timeseries;
+            $scope.timesToPlot = data.timeseries;
+            $scope.income = response.income;
+            $scope.tax = response.tax;
           })
           .error(function (err) {
             console.log("error");
@@ -191,11 +192,12 @@
 
       function findDataNodeInThisMonth() {
         let arr = [];
+        console.log("find data node in this month");
         for (let t in timesToPlot) {
-          arr.push(timesToPlot[t].v);
-          console.log(timesToPlot[t].v);
+          arr.push($scope.timesToPlot[t].v);
+          console.log($scope.timesToPlot[t].v);
           console.log("urgh");
-          console.log(timesToPlot[t][v]);
+          console.log($scope.timesToPlot[t][v]);
         }
         return arr;
       }
@@ -211,13 +213,20 @@
             label: getCurrentMonthAsString(),
             backgroundColor: 'rgb(155, 29, 112)',
             borderColor: 'rgb(155, 29, 112)',
-            data: findDataNodeInThisMonth(),
+            data: findDataNodeInThisMonth().forEach((dataset) => {
+              dataset.data.push(data);
+            }),
           }]
         },
 
         // Configuration options go here
         options: {}
       });
+      // update the chart after the timesToPlot has updated
+      $scope.$watch('timesToPlot', function () {
+        console.log($scope.timesToPlot);
+        chart.update();
+      })
     }
 
     /*

@@ -10,10 +10,10 @@
     <p>Cumulative Net Income:</p>
     <div class="home-buttons">
         <a href="#/home/month">
-            <button>Mo</button>
+            <button class="active">Mo</button>
         </a>
         <a href="#/home/year">
-            <button class="active">Y</button>
+            <button>Y</button>
         </a>
         <a href="#/home">
             <button>YTD</button>
@@ -23,10 +23,12 @@
     <div class="home-more-info">
         <small>Deductions</small>
         <span class="large">$173</span>
+        <span class="large" ng-bind="model.income"></span>
     </div>
     <div class="home-more-info">
         <small>Next Tax Payment</small>
         <span class="large">$928</span>
+        <span class="large" ng-bind="model.tax"></span>
         <small>due on March 28, 2018</small>
     </div>
 </section>
