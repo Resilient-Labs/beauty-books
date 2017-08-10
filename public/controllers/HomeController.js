@@ -197,8 +197,6 @@
           console.log("be humble");
           arr.push($scope.timesToPlot[t].v);
           console.log($scope.timesToPlot[t].v);
-          console.log("urgh");
-          console.log($scope.timesToPlot[t][v]);
         }
         return arr;
       }
