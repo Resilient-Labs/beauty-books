@@ -14,13 +14,21 @@
     </a>
   </div>
   <h2>Appointments</h2>
+  <div ng-show="model.success" class="alert alert-danger" role="alert">
+    {{model.success}}
+  </div>
   <div class="appointment" ng-repeat="appt in model.appts">
     <label>Client Name</label>
     <label>Amount</label>
     <p>{{ appt.client }} </p>
     <p>${{ appt.amount }} </p>
     <label>Service</label>
-    <p>{{ appt.note }} Wash, Blow out, Color Correction</p>
+    <p>{{ appt.note }} </p>
+    <button
+        class="delete-appt-btn"
+        ng-click="model.deleteAppointment(model.appts[$index].id, $index)">
+      <img src="./img/circle-close-btn.png" alt="remove" />
+    </button>
   </div>
 </section>
 <footer>

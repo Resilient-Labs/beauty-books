@@ -12,7 +12,6 @@
         let vm = this;
         vm.addAppointment = addAppointment;
         vm.updateAppointment = updateAppointment;
-        vm.deleteAppointment = deleteAppointment;
 
         function init() {
             console.log("Appointments Add Controller loaded");
@@ -22,8 +21,6 @@
         function addAppointment(appt) {
           $http.post('/api/appointment', appt)
             .success(function (appt) {
-              console.log(appt);
-              console.log("appointment successfull added, now redrecting");
               $location.url("/appointments");
             })
             .error(function (err) {
@@ -32,17 +29,20 @@
             })
         }
 
-        function updateAppointment() {
+        function updateAppointment(apptId, appt) {
+          $http.put('/api/appointment', appt)
+            .success(function (appt) {
 
-        }
-
-        function deleteAppointment() {
-
+            })
+            .error(function (err) {
+              console.log("error updating");
+            })
         }
     }
 
     function AppointmentsListController($http, $routeParams, $scope, $location) {
       let vm = this;
+      vm.deleteAppointment = deleteAppointment;
 
       function init() {
         console.log("Appointments List Controller loaded");
@@ -50,9 +50,23 @@
           .then(function (response) {
             let appointments = response.data;
             vm.appts = appointments.records;
-            console.log(appointments.records);
           })
       }
       init();
+
+      function deleteAppointment(apptId, arrIdx) {
+        let deletedClientName = vm.appts[arrIdx].client; //vm.appts[apptId].client;
+
+        $http.delete('/api/appointment/'+apptId)
+          .success(function (apptId, arrIdx) {
+            vm.success = "Appointment for: " + deletedClientName + " was" +
+              " successfully deleted!";
+            $scope.appts.splice(arrIdx,1);
+            $location.url("/appointments");
+          })
+          .error(function (err) {
+            console.log("Error deleting this appointment");
+          })
+      }
     }
 })();

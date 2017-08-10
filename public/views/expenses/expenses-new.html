@@ -10,23 +10,20 @@
     <h2>New Expenses</h2>
     <form>
         <label for="expense-type">Expense Type</label>
-        <select name="expense-type" id="expense-type">
+        <select name="expense-type" id="expense-type" ng-model="model.expense.expense_type_id">
             <option value="" disabled selected>Select the expense type</option>
-            <option value="advertising">Advertising</option>
-            <option value="assets">Assets</option>
-            <option value="commissions">Commissions</option>
-            <option value="insurance">Insurance</option>
-            <option value="materials-supplies">Materials & Supplies</option>
-            <option value="meals-entertainment">Meals & Entertainment</option>
-            <option value="professional-services">Professional Services</option>
+            <option
+            ng-repeat="type in model.expenseTypes"
+            ng-value="type.id">{{type.name}}</option>
         </select>
         <label for="expense-total">Expense Total</label>
         <input type="text" name="expense-total" id="expense-total"
-               placeholder="Expense Total">
+               placeholder="Expense Total" ng-model="model.expense.amount">
         <label for="expense-date">Date of Expense</label>
         <input pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d"
-            type="text" name="expense-date" id="expense-date" placeholder="MM/DD/YYYY">
-        <button type="submit">Add Expense</button>
+            type="text" name="expense-date" id="expense-date" placeholder="MM/DD/YYYY"
+        ng-model="model.expense.expense_date">
+        <button ng-click="model.createExpense(model.expense)">Add Expense</button>
         <a href="#/expenses">Cancel</a>
     </form>
 </section>
