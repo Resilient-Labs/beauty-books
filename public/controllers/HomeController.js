@@ -226,6 +226,7 @@
       // update the chart after the timesToPlot has updated
       $scope.$watch('timesToPlot', function () {
         console.log($scope.timesToPlot);
+        findDataNodeInThisMonth();
         chart.update();
       })
     }
