@@ -146,7 +146,7 @@
 
       function getCurrentMonthAsString() {
         // want to get the current date and find the month that today is in
-        var currMonth = new Date().getMonth();
+        let currMonth = new Date().getMonth();
         let month = "";
         switch (currMonth) {
           case 0: month = "January"; break;
@@ -165,7 +165,7 @@
         }
         return month;
       }
-      console.log(getCurrentMonthAsString());
+
       /**
        * Populate an array with the each possible day in the current month
        * @returns {Array}
@@ -180,16 +180,10 @@
         return daysInThisMonth;
       }
 
-      // function findPeakInMonth() {
-      //   let highest = timesToPlot[0];
-      //   for (var t in timesToPlot) {
-      //     if (timesToPlot[t] >= highest) {
-      //       highest = timesToPlot[t];
-      //     }
-      //   }
-      //   return highest;
-      // }
-
+      /**
+       * Find all of the data node values for the month
+       * @returns {Array}
+       */
       function findDataNodeInThisMonth() {
         let arr = [];
         console.log("find data node in this month");
@@ -223,7 +217,6 @@
        * update the chart after the timesToPlot has updated
        */
       $scope.$watch('timesToPlot', function () {
-        console.log($scope.timesToPlot);
         let dns = findDataNodeInThisMonth();
         for (let dn in dns) {
           chart.data.datasets[0].data.push(dns[dn]);
