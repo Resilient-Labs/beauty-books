@@ -22,7 +22,6 @@
               // vm.user.name = response.data.firstname + " " + response.data.lastname;
               $scope.user = response.data;
               $scope.user.name = response.data.firstname + " " + response.data.lastname;
-              console.log(vm.user);
             })
         }
         init();
@@ -82,7 +81,7 @@
       function getMonth() {
         $http.get('/api/home/m')
           .success(function (response) {
-            console.log(response.data);
+            console.log(response);
           })
           .error(function (err) {
             console.log("error");
@@ -136,7 +135,7 @@
       function getYtd() {
         $http.get('/api/home/ytd')
           .success(function (response) {
-            console.log(response.data);
+            console.log(response);
           })
           .error(function (err) {
             console.log("error");
