@@ -194,9 +194,8 @@
         let arr = [];
         console.log("find data node in this month");
         for (let t in $scope.timesToPlot) {
-          console.log("be humble");
+          console.log("BE HUMBLE");
           arr.push($scope.timesToPlot[t].v);
-          console.log($scope.timesToPlot[t].v);
         }
         return arr;
       }
@@ -212,19 +211,23 @@
             label: getCurrentMonthAsString(),
             backgroundColor: 'rgb(155, 29, 112)',
             borderColor: 'rgb(155, 29, 112)',
-            data: findDataNodeInThisMonth().forEach((dataset) => {
-              dataset.data.push(data);
-            }),
+            data: findDataNodeInThisMonth(),
           }]
         },
 
         // Configuration options go here
         options: {}
       });
-      // update the chart after the timesToPlot has updated
+      
+      /**
+       * update the chart after the timesToPlot has updated
+       */
       $scope.$watch('timesToPlot', function () {
         console.log($scope.timesToPlot);
-        findDataNodeInThisMonth();
+        let dns = findDataNodeInThisMonth();
+        for (let dn in dns) {
+          chart.data.datasets.push(dns[dn]);
+        }
         chart.update();
       })
     }
