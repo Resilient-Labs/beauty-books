@@ -349,7 +349,6 @@ app.get('/api/home/:range',
             for(var d = startDate; moment(endDate).diff(moment(d), 'days') > 0; d = moment(d).add(1, 'days').format('YYYY-MM-DD')) {
               //console.log(d);
               if(ts[d]) {
-                console.log('matched at ' + d);
                 timeseries.push({t:d, v: ts[d]});
                 tmpNet = ts[d];
               } else {
