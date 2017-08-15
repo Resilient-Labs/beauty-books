@@ -322,27 +322,41 @@ app.get('/api/home/:range',
           } else {
             var cumulativeNet = 0, income = 0, expenses = 0;
             var apptIdx = 0, expIdx = 0;
-            var timeseries = [];
+            var ts = {};
+            // iterate over appt and expense results, build a map of date => cumulativeNet
             while(apptIdx < apptRows.length || expIdx < expRows.length) {
               if(apptRows[apptIdx] && expRows[expIdx] && apptRows[apptIdx].appt_date == expRows[expIdx].expense_date) {
                 income += apptRows[apptIdx].amount;
                 expenses += expRows[expIdx].amount;
                 cumulativeNet += apptRows[apptIdx].amount - expRows[expIdx].amount;
-                timeseries.push({t:expRows[expIdx].expense_date, v: cumulativeNet});
+                ts[moment(expRows[expIdx].expense_date).format('YYYY-MM-DD')] = cumulativeNet;
                 apptIdx++;
                 expIdx++;
               } else if(apptRows[apptIdx] && (expRows[expIdx] && apptRows[apptIdx].appt_date < expRows[expIdx].expense_date || !expRows[expIdx])) {
                 income += apptRows[apptIdx].amount;
                 cumulativeNet += apptRows[apptIdx].amount;
-                timeseries.push({t:apptRows[apptIdx].appt_date, v: cumulativeNet});
+                ts[moment(apptRows[apptIdx].appt_date).format('YYYY-MM-DD')] = cumulativeNet;
                 apptIdx++;
               } else if(expRows[expIdx] && (apptRows[apptIdx] && apptRows[apptIdx].appt_date > expRows[expIdx].expense_date || !apptRows[apptIdx])) {
                 expenses += expRows[expIdx].amount;
                 cumulativeNet -= expRows[expIdx].amount;
-                timeseries.push({t:expRows[expIdx].expense_date, v: cumulativeNet});
+                ts[moment(expRows[expIdx].expense_date).format('YYYY-MM-DD')] = cumulativeNet;
                 expIdx++;
               }
             }
+            // iterate through every day of time range and fill in all missing days
+            var timeseries = [], tmpNet = 0;
+            for(var d = startDate; moment(endDate).diff(moment(d), 'days') > 0; d = moment(d).add(1, 'days').format('YYYY-MM-DD')) {
+              //console.log(d);
+              if(ts[d]) {
+                console.log('matched at ' + d);
+                timeseries.push({t:d, v: ts[d]});
+                tmpNet = ts[d];
+              } else {
+                timeseries.push({t:d, v: tmpNet});
+              }
+            }
+
             // if month resolution, go through daily time series and accumulate by month.
             // as with day resolution, missing months are skipped (as opposed to filling in for all dates in the interval)
             if(resolution == "month" && timeseries.length) {
@@ -362,8 +376,8 @@ app.get('/api/home/:range',
               monthlyTimeseries.push({t:firstOfMonth, v:monTotal});
               timeseries = monthlyTimeseries;
             }
-            res.send({ income: '$' + income, expenses: '$' + expenses, net: (cumulativeNet < 0 ? '-' : '' ) + '$' + Math.abs(cumulativeNet),
-                       tax: '$' + Math.max(0, (cumulativeNet * conf.defaultTaxRate).toFixed(2)), timeseries: timeseries});
+            res.send({ income: '$' + Number(income).toLocaleString(), expenses: '$' + Number(expenses).toLocaleString(), net: (cumulativeNet < 0 ? '-' : '' ) + '$' + Number(Math.abs(cumulativeNet)).toLocaleString(),
+                       tax: '$' + Number(Math.max(0, (cumulativeNet * conf.defaultTaxRate).toFixed(2))).toLocaleString(), timeseries: timeseries});
           }
         });
       }
