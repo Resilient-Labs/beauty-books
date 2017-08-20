@@ -146,7 +146,6 @@
         }
       init();
       getMonth();
-      chart.update();
 
       function getMonth() {
         $http.get('/api/home/m')
@@ -159,6 +158,7 @@
             for (var time in data.timeseries) {
               console.log("pushed");
               chart.data.datasets[0].data.push(data.timeseries[time]);
+              chart.update();
             }
             $scope.tax = data.tax;
           })
