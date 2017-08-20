@@ -129,6 +129,7 @@
         }
       init();
       getMonth();
+      chart.update();
 
       function getMonth() {
         $http.get('/api/home/m')
@@ -137,11 +138,12 @@
             console.log(data);
             vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
+            console.log("ready to push");
             for (var time in data.timeseries) {
+              console.log("pushed");
               chart.data.datasets[0].data.push(data.timeseries[time]);
             }
             $scope.tax = data.tax;
-            chart.update();
           })
           .error(function (err) {
             console.log("error");
@@ -218,17 +220,9 @@
       /**
        * update the chart after the timesToPlot has updated
        */
-      // $scope.$watch('timesToPlot', function () {
-      //   let dns = [];
-      //   dns = findDataNodeInThisMonth();
-      //   console.log(dns + "empty?");
-      //   if (dns.length > 0) {
-      //     for (let dn in dns) {
-      //       chart.data.datasets[0].data.push(dns[dn]);
-      //     }
-      //     chart.update();
-      //   }
-      // })
+      $scope.$watch('timesToPlot', function () {
+        chart.update();
+      })
       
     }
 
