@@ -10,7 +10,7 @@
      * Controls the flow of data for the home-week view
      * @constructor
      */
-    function HomeWeekController($http, $routeParams, $scope) {
+    function HomeWeekController($http, $scope) {
         let vm = this;
         vm.getWeek = getWeek;
 
@@ -62,7 +62,7 @@
    * Controls the flow of data for the home-year view
    * @constructor
    */
-  function HomeYearController($http, $routeParams, $scope) {
+  function HomeYearController($http, $scope) {
     let vm = this;
     vm.getYear = getYear;
 
@@ -113,38 +113,41 @@
      * Controls the flow of data for the home-month view
      * @constructor
      */
-    function HomeMonthController($http, $routeParams, $scope) {
+    function HomeMonthController($http, $scope) {
         let vm = this;
+        let timesToPlot = [];
         vm.getMonth = getMonth;
 
-        function init() {
-            console.log("Home Month Controller loaded");
+      function init() {
+          console.log("Home Month Controller loaded");
           $http.get('/api/user')
             .then(function (response) {
-              vm.user = response.data;
-              $scope.user = response.data;
-              $scope.user.name = response.data.firstname + " " + response.data.lastname;
+              // vm.user = response.data;
+              // $scope.user = response.data;
+              // $scope.user.name = response.data.firstname + " " + response.data.lastname;
             });
         }
-        init();
-        getMonth();
-        let timesToPlot = [];
+      init();
+      getMonth();
 
       function getMonth() {
         $http.get('/api/home/m')
-          .success(function (response) {
+          .then(function (response) {
             let data = response;
             console.log(data);
-            vm.tax = 555;
-            vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
-            $scope.income = 9999;
+            vm.homeData = data;
+            vm.tax = data.tax;
+            vm.income = data.income;
+            vm.expenses = data.expenses;
+            vm.net = data.net;
+            $scope.income = data.income;
             $scope.tax = data.tax;
+            $scope.expenses = data.expenses;
+            $scope.net = data.net;
+
             console.log("tax: " + $scope.tax + " , income: " + $scope.income);
             console.log("VMtax: " + vm.tax + " , VMincome: " + vm.income);
-          })
-          .error(function (err) {
-            console.log("error");
           })
       }
 
@@ -414,7 +417,7 @@
      * Controls the flow of data for the home-ytd view
      * @constructor
      */
-    function HomeYTDController($http, $routeParams, $scope, currentUser) {
+    function HomeYTDController($http, $scope) {
         let vm = this;
         vm.getYtd = getYtd;
 

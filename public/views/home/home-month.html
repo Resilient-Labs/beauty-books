@@ -20,11 +20,6 @@
         </a>
     </div>
     <canvas id="monthlyChart"></canvas>
-
-    <div id="monthContainer"
-         style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto">
-    </div>
-
     <div class="home-more-info">
         <small>Deductions</small>
         <span class="large">$173</span>
@@ -34,6 +29,11 @@
         <small>Next Tax Payment</small>
         <span class="large">$928</span>
         <span class="large" ng-bind="tax"></span>
+        <span class="large" ng-bind="model.tax"></span>
+        <input type="text" disabled ng-model="model.homeData.tax">
+        <input type="text" disabled ng-model="tax">
+        <span class="large">{{tax}}</span>
+        <span class="large">{{model.tax}}</span>
         <small>due on March 28, 2018</small>
     </div>
 </section>
