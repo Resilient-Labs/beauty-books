@@ -132,22 +132,25 @@
 
       function getMonth() {
         $http.get('/api/home/m')
-          .then(function (response) {
+          .success(function (response) {
             let data = response;
             console.log(data);
-            $scope.timesToPlot = data.timeseries;
-            vm.homeData = data;
-            vm.tax = data.tax;
-            vm.income = data.income;
-            vm.expenses = data.expenses;
-            vm.net = data.net;
-            $scope.income = data.income;
-            $scope.tax = data.tax;
-            $scope.expenses = data.expenses;
-            $scope.net = data.net;
+            // $scope.timesToPlot = data.timeseries;
+            // vm.homeData = data;
+            // vm.tax = data.tax;
+            // vm.income = data.income;
+            // vm.expenses = data.expenses;
+            // vm.net = data.net;
+            // $scope.income = data.income;
+            // $scope.tax = data.tax;
+            // $scope.expenses = data.expenses;
+            // $scope.net = data.net;
 
             console.log("tax: " + $scope.tax + " , income: " + $scope.income);
             console.log("VMtax: " + vm.tax + " , VMincome: " + vm.income);
+          })
+          .error(function (err) {
+            console.log("error");
           })
       }
 
