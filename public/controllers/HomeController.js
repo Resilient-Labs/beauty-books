@@ -188,10 +188,7 @@
         let arr = [];
         console.log("find data node in this month");
         for (let t in $scope.timesToPlot) {
-          console.log(t);
-          console.log($scope.timesToPlot[t]);
           arr.push($scope.timesToPlot[t].v);
-          console.log($scope.timesToPlot[t].v);
         }
         return arr;
       }
@@ -220,6 +217,7 @@
       $scope.$watch('timesToPlot', function () {
         let dns = [];
         dns = findDataNodeInThisMonth();
+        console.log(dns + "empty?");
         if (dns.length > 0) {
           for (let dn in dns) {
             chart.data.datasets[0].data.push(dns[dn]);
