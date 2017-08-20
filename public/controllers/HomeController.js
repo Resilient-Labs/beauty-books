@@ -218,11 +218,14 @@
        * update the chart after the timesToPlot has updated
        */
       $scope.$watch('timesToPlot', function () {
-        let dns = findDataNodeInThisMonth();
-        for (let dn in dns) {
-          chart.data.datasets[0].data.push(dns[dn]);
+        let dns = [];
+        dns = findDataNodeInThisMonth();
+        if (dns.length > 0) {
+          for (let dn in dns) {
+            chart.data.datasets[0].data.push(dns[dn]);
+          }
+          chart.update();
         }
-        chart.update();
       })
       
     }
