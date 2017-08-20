@@ -117,6 +117,23 @@
         let vm = this;
         let timesToPlot = [];
         vm.getMonth = getMonth;
+        var ctx = document.getElementById('monthlyChart').getContext('2d');
+        var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: 'line',
+          // The data for our dataset
+          data: {
+            labels: daysInThisMonth(),
+            datasets: [{
+              label: getCurrentMonthAsString(),
+              borderColor: 'rgb(155, 29, 112)',
+              data: [],
+            }]
+          },
+  
+          // Configuration options go here
+          options: {}
+        });
 
       function init() {
           console.log("Home Month Controller loaded");
@@ -198,24 +215,6 @@
       //   }
       //   return arr;
       // }
-
-      var ctx = document.getElementById('monthlyChart').getContext('2d');
-      var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-        // The data for our dataset
-        data: {
-          labels: daysInThisMonth(),
-          datasets: [{
-            label: getCurrentMonthAsString(),
-            borderColor: 'rgb(155, 29, 112)',
-            data: [],
-          }]
-        },
-
-        // Configuration options go here
-        options: {}
-      });
 
       /**
        * update the chart after the timesToPlot has updated
