@@ -194,6 +194,7 @@
       function findDataNodeInThisMonth() {
         let arr = [];
         console.log("find data node in this month");
+        console.log("debugger");
         for (let t in $scope.timesToPlot) {
           console.log("BE HUMBLE");
           arr.push($scope.timesToPlot[t].v);
