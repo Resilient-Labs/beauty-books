@@ -135,13 +135,9 @@
           .success(function (response) {
             let data = response;
             console.log(data);
-            vm.tax = 555;
             vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
-            $scope.income = 9999;
             $scope.tax = data.tax;
-            console.log("tax: " + $scope.tax + " , income: " + $scope.income);
-            console.log("VMtax: " + vm.tax + " , VMincome: " + vm.income);
           })
           .error(function (err) {
             console.log("error");
@@ -185,15 +181,6 @@
       }
 
       /**
-       *
-       */
-      // function mapMonthSeries() {
-      //   for (var i in bleh) {
-      //
-      //   }
-      // }
-
-      /**
        * Find all of the data node values for the month
        * @returns {Array}
        */
@@ -201,8 +188,10 @@
         let arr = [];
         console.log("find data node in this month");
         for (let t in $scope.timesToPlot) {
-          console.log("BE HUMBLE");
+          console.log(t);
+          console.log($scope.timesToPlot[t]);
           arr.push($scope.timesToPlot[t].v);
+          console.log($scope.timesToPlot[t].v);
         }
         return arr;
       }
@@ -216,7 +205,6 @@
           labels: daysInThisMonth(),
           datasets: [{
             label: getCurrentMonthAsString(),
-            backgroundColor: 'rgb(155, 29, 112)',
             borderColor: 'rgb(155, 29, 112)',
             data: findDataNodeInThisMonth(),
           }]
