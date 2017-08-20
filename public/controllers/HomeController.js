@@ -137,6 +137,9 @@
             console.log(data);
             vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
+            for (var time in data.timeseries) {
+              chart.data.datasets[0].data.push(data.timeseries[time]);
+            }
             $scope.tax = data.tax;
             chart.update();
           })
@@ -185,14 +188,14 @@
        * Find all of the data node values for the month
        * @returns {Array}
        */
-      function findDataNodeInThisMonth() {
-        let arr = [];
-        console.log("find data node in this month");
-        for (let t in $scope.timesToPlot) {
-          arr.push($scope.timesToPlot[t].v);
-        }
-        return arr;
-      }
+      // function findDataNodeInThisMonth() {
+      //   let arr = [];
+      //   console.log("find data node in this month");
+      //   for (let t in $scope.timesToPlot) {
+      //     arr.push($scope.timesToPlot[t].v);
+      //   }
+      //   return arr;
+      // }
 
       var ctx = document.getElementById('monthlyChart').getContext('2d');
       var chart = new Chart(ctx, {
@@ -204,7 +207,7 @@
           datasets: [{
             label: getCurrentMonthAsString(),
             borderColor: 'rgb(155, 29, 112)',
-            data: findDataNodeInThisMonth(),
+            data: [],
           }]
         },
 
