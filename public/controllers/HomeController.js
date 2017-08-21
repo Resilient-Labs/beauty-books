@@ -75,7 +75,7 @@
       data: {
         labels: [],
         datasets: [{
-          label: "Yearly",
+          label: "Net: $ ",
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
           data: [],
@@ -90,7 +90,6 @@
       $http.get('/api/home/y')
         .then(function (response) {
           let data = response.data;
-          console.log(data);
           $scope.timesToPlot = data.timeseries;
 
           vm.income = data.income;
@@ -99,7 +98,6 @@
           vm.net = data.net;
 
           for (var time in data.timeseries) {
-            console.log(data.timeseries[time]);
             chart.data.datasets[0].data.push(data.timeseries[time].v);
             chart.data.labels.push(getMonthAsString(data.timeseries[time].t));
             if (time == data.timeseries.length - 1) {
@@ -113,7 +111,6 @@
     function getMonthAsString(date) {
       // want to get the current date and find the month that today is in
       let monthStr = new Date(date.toString()).getMonth();
-      console.log(monthStr)
       let month = "";
       switch (monthStr) {
         case 0: month = "January"; break;
@@ -130,7 +127,7 @@
         case 11: month = "December"; break;
         default: month = "";
       }
-      return month;
+      return month.substring(0, 3);
     }
   }
 
@@ -165,14 +162,12 @@
         $http.get('/api/home/m')
           .then(function (response) {
             let data = response.data;
-            console.log(data);
 
             vm.income = data.income;
             vm.tax = data.tax;
             vm.expenses = data.expenses;
             vm.net = data.net;
             for (var time in data.timeseries) {
-              console.log(data.timeseries[time]);
               chart.data.datasets[0].data.push(data.timeseries[time].v);
               if (time == data.timeseries.length - 1) {
                 chart.update();
@@ -237,7 +232,7 @@
           data: {
             labels: [],
             datasets: [{
-              label: "Yearly",
+              label: "Net: $ ",
               backgroundColor: 'rgb(55, 79, 12)',
               borderColor: 'rgb(55, 79, 12)',
               data: [],
@@ -252,7 +247,6 @@
         $http.get('/api/home/ytd')
           .then(function (response) {
             let data = response.data;
-            console.log(data);
   
             vm.income = data.income;
             vm.tax = data.tax;
@@ -260,7 +254,6 @@
             vm.net = data.net;
 
             for (var time in data.timeseries) {
-              console.log(data.timeseries[time]);
               chart.data.datasets[0].data.push(data.timeseries[time].v);
               chart.data.labels.push(getMonthAsString(data.timeseries[time].t));
               if (time == data.timeseries.length - 1) {
@@ -274,7 +267,6 @@
       function getMonthAsString(date) {
         // want to get the current date and find the month that today is in
         let monthStr = new Date(date.toString()).getMonth();
-        console.log(monthStr)
         let month = "";
         switch (monthStr) {
           case 0: month = "January"; break;
