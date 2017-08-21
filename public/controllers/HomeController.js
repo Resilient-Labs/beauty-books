@@ -152,7 +152,8 @@
             vm.expenses = data.expenses;
             vm.net = data.net;
             for (var time in data.timeseries) {
-              chart.data.datasets[0].data.push(data.timeseries[time]);
+              console.log(data.timeseries[time]);
+              chart.data.datasets[0].data.push(data.timeseries[time].v);
             }
           })
       }
