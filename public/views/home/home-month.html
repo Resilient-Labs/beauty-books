@@ -23,10 +23,13 @@
     <div class="home-more-info">
         <small>Deductions</small>
         <span class="large">$173</span>
+        <span class="large income">{{model.income}}</span>
+        <span class="large" ng-bind='model.income' ></span>
     </div>
     <div class="home-more-info">
         <small>Next Tax Payment</small>
-        <span class="large tax">$928</span>
+        <span class="large tax">{{tax}}</span>
+        <span class="large tax" ng-bind="tax">{{tax}}</span>
         <small>due on March 28, 2018</small>
     </div>
 </section>

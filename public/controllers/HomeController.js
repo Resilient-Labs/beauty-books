@@ -155,6 +155,9 @@
             vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
             console.log("ready to push");
+            vm.income = data.income;
+            vm.tax = data.tax;
+            $scope.tax = data.tax;
             // for (var time in data.timeseries) {
             //   console.log("pushed");
             //   chart.data.datasets[0].data.push(data.timeseries[time]);
