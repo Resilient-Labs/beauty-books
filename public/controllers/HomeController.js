@@ -150,7 +150,7 @@
       function getMonth() {
         $http.get('/api/home/m')
           .then(function (response) {
-            let data = response;
+            let data = response.data;
             console.log(data);
             vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
