@@ -75,7 +75,7 @@
       data: {
         labels: [],
         datasets: [{
-          label: "Net: $ ",
+          label: "Past Year",
           backgroundColor: 'rgb(175,27,63)',
           borderColor: 'rgb(175,27,63)',
           data: [],
