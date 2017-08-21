@@ -15,7 +15,6 @@
     vm.updateExpense = updateExpense;
 
     function init() {
-      console.log("Expenses Add Controller loaded");
 
       $http.get('/api/expense_type')
         .then(function (response) {
@@ -65,7 +64,6 @@
     ];
 
     function init() {
-      console.log("Expenses List Controller loaded");
 
       $http.get('/api/expense_type')
         .then(function (response) {

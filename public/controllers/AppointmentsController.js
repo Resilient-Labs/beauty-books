@@ -14,7 +14,7 @@
         vm.updateAppointment = updateAppointment;
 
         function init() {
-            console.log("Appointments Add Controller loaded");
+            
         }
         init();
 
@@ -45,7 +45,6 @@
       vm.deleteAppointment = deleteAppointment;
 
       function init() {
-        console.log("Appointments List Controller loaded");
         $http.get('/api/appointment')
           .then(function (response) {
             let appointments = response.data;

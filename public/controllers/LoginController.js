@@ -22,7 +22,6 @@
             let loginType = e.currentTarget.id;
             if (loginType == "login-facebook") {
                 // Login code for facebook then route to this location on success
-                console.log("Login with Facebook");
 
               protocol = $location.protocol();
               host = $location.host();
@@ -33,7 +32,6 @@
               window.location = fburl;
             } else if (loginType == "login-google") {
                 // Login code for Google then route to this location on success
-              console.log("Login with Google");
 
               protocol = $location.protocol();
               host = $location.host();

@@ -108,7 +108,6 @@
         } else {
           // $location.url('/home/');
           deferred.resolve(user);
-          console.log("user is logged in");
         }
       });
     return deferred.promise;

@@ -76,14 +76,16 @@
         labels: [],
         datasets: [{
           label: "Net: $ ",
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgb(175,27,63)',
+          borderColor: 'rgb(175,27,63)',
           data: [],
         }]
       },
 
       // Configuration options go here
-      options: {}
+      options: {
+        animation: { easing: "easeInOutCirc" },
+      }
     });
 
     function getYear() {
@@ -145,17 +147,19 @@
           type: 'line',
           // The data for our dataset
           data: {
-            labels: daysInThisMonth(),
+            labels: getCurrentMonthAsString() + " " + daysInThisMonth(),
             datasets: [{
               label: getCurrentMonthAsString(),
-              borderColor: 'rgb(155, 29, 112)',
-              backgroundColor: 'transparent',
+              backgroundColor: 'rgb(175,27,63)',
+              borderColor: 'rgb(175,27,63)',
               data: [],
             }]
           },
   
           // Configuration options go here
-          options: {}
+          options: {
+            animation: { easing: "easeInOutCirc" },
+          }
         });
 
       function getMonth() {
@@ -232,15 +236,17 @@
           data: {
             labels: [],
             datasets: [{
-              label: "Net: $ ",
-              backgroundColor: 'rgb(55, 79, 12)',
-              borderColor: 'rgb(55, 79, 12)',
+              label: "Year to Date",
+              backgroundColor: 'rgb(175,27,63)',
+              borderColor: 'rgb(175,27,63)',
               data: [],
             }]
           },
   
           // Configuration options go here
-          options: {}
+          options: {
+            animation: { easing: "easeInOutCirc" },
+          }
         });
 
       function getYtd() {

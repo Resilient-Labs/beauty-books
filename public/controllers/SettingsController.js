@@ -11,7 +11,6 @@
         let vm = this;
 
         function init() {
-            console.log("Settings Controller loaded");
 
         $http.get('/api/user')
           .then(function (response) {
