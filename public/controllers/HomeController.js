@@ -65,6 +65,7 @@
   function HomeYearController($http, $scope) {
     let vm = this;
     vm.getYear = getYear;
+    vm.getMonthAsString = getMonthAsString;
     var ctx = document.getElementById('yearChart').getContext('2d');
     var chart = new Chart(ctx, {
       // The type of chart we want to create
@@ -100,7 +101,7 @@
           for (var time in data.timeseries) {
             console.log(data.timeseries[time]);
             chart.data.datasets[0].data.push(data.timeseries[time].v);
-            chart.data.labels.push(data.timeseries[time].t);
+            chart.data.labels.push(getMonthAsString(data.timeseries[time].t));
             if (time == data.timeseries.length - 1) {
               chart.update();
             }
@@ -108,6 +109,29 @@
         })
     }
     getYear();
+
+    function getMonthAsString(date) {
+      // want to get the current date and find the month that today is in
+      let monthStr = new Date(date.toString()).getMonth();
+      console.log(monthStr)
+      let month = "";
+      switch (monthStr) {
+        case 0: month = "January"; break;
+        case 1: month = "February"; break;
+        case 2: month = "March"; break;
+        case 3: month = "April"; break;
+        case 4: month = "May"; break;
+        case 5: month = "June"; break;
+        case 6: month = "July"; break;
+        case 7: month = "August"; break;
+        case 8: month = "September"; break;
+        case 9: month = "October"; break;
+        case 10: month = "November"; break;
+        case 11: month = "December"; break;
+        default: month = "";
+      }
+      return month;
+    }
   }
 
     /*
@@ -203,6 +227,7 @@
     function HomeYTDController($http, $scope) {
         let vm = this;
         vm.getYtd = getYtd;
+        vm.getMonthAsString = getMonthAsString;
         var ctx = document.getElementById('ytdChart').getContext('2d');
         var chart = new Chart(ctx, {
           // The type of chart we want to create
@@ -215,7 +240,7 @@
               label: "Yearly",
               backgroundColor: 'rgb(55, 79, 12)',
               borderColor: 'rgb(55, 79, 12)',
-              data: [0, 10, 4],
+              data: [],
             }]
           },
   
@@ -237,7 +262,7 @@
             for (var time in data.timeseries) {
               console.log(data.timeseries[time]);
               chart.data.datasets[0].data.push(data.timeseries[time].v);
-              chart.data.labels.push(data.timeseries[time].t);
+              chart.data.labels.push(getMonthAsString(data.timeseries[time].t));
               if (time == data.timeseries.length - 1) {
                 chart.update();
               }
@@ -245,6 +270,29 @@
           })
       }
       getYtd();
+
+      function getMonthAsString(date) {
+        // want to get the current date and find the month that today is in
+        let monthStr = new Date(date.toString()).getMonth();
+        console.log(monthStr)
+        let month = "";
+        switch (monthStr) {
+          case 0: month = "January"; break;
+          case 1: month = "February"; break;
+          case 2: month = "March"; break;
+          case 3: month = "April"; break;
+          case 4: month = "May"; break;
+          case 5: month = "June"; break;
+          case 6: month = "July"; break;
+          case 7: month = "August"; break;
+          case 8: month = "September"; break;
+          case 9: month = "October"; break;
+          case 10: month = "November"; break;
+          case 11: month = "December"; break;
+          default: month = "";
+        }
+        return month.substring(0, 3);
+      }
     }
 
 })();
