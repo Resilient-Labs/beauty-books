@@ -111,23 +111,23 @@
         let vm = this;
         let timesToPlot = [];
         vm.getMonth = getMonth;
-        // var ctx = document.getElementById('monthlyChart').getContext('2d');
-        // var chart = new Chart(ctx, {
-        //   // The type of chart we want to create
-        //   type: 'line',
-        //   // The data for our dataset
-        //   data: {
-        //     labels: daysInThisMonth(),
-        //     datasets: [{
-        //       label: getCurrentMonthAsString(),
-        //       borderColor: 'rgb(155, 29, 112)',
-        //       data: [],
-        //     }]
-        //   },
+        var ctx = document.getElementById('monthlyChart').getContext('2d');
+        var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: 'line',
+          // The data for our dataset
+          data: {
+            labels: daysInThisMonth(),
+            datasets: [{
+              label: getCurrentMonthAsString(),
+              borderColor: 'rgb(155, 29, 112)',
+              data: [],
+            }]
+          },
   
-        //   // Configuration options go here
-        //   options: {}
-        // });
+          // Configuration options go here
+          options: {}
+        });
 
       // function init() {
       //     console.log("Home Month Controller loaded");
@@ -151,14 +151,13 @@
             vm.tax = data.tax;
             vm.expenses = data.expenses;
             vm.net = data.net;
-            // for (var time in data.timeseries) {
-            //   console.log("pushed");
-            //   chart.data.datasets[0].data.push(data.timeseries[time]);
-            //   chart.update();
-            // }
+            for (var time in data.timeseries) {
+              chart.data.datasets[0].data.push(data.timeseries[time]);
+            }
           })
       }
       getMonth();
+      chart.update();
 
       function getCurrentMonthAsString() {
         // want to get the current date and find the month that today is in
