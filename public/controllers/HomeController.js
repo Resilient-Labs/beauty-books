@@ -117,54 +117,53 @@
         let vm = this;
         let timesToPlot = [];
         vm.getMonth = getMonth;
-        var ctx = document.getElementById('monthlyChart').getContext('2d');
-        var chart = new Chart(ctx, {
-          // The type of chart we want to create
-          type: 'line',
-          // The data for our dataset
-          data: {
-            labels: daysInThisMonth(),
-            datasets: [{
-              label: getCurrentMonthAsString(),
-              borderColor: 'rgb(155, 29, 112)',
-              data: [],
-            }]
-          },
+        // var ctx = document.getElementById('monthlyChart').getContext('2d');
+        // var chart = new Chart(ctx, {
+        //   // The type of chart we want to create
+        //   type: 'line',
+        //   // The data for our dataset
+        //   data: {
+        //     labels: daysInThisMonth(),
+        //     datasets: [{
+        //       label: getCurrentMonthAsString(),
+        //       borderColor: 'rgb(155, 29, 112)',
+        //       data: [],
+        //     }]
+        //   },
   
-          // Configuration options go here
-          options: {}
-        });
+        //   // Configuration options go here
+        //   options: {}
+        // });
 
-      function init() {
-          console.log("Home Month Controller loaded");
-          $http.get('/api/user')
-            .then(function (response) {
-              vm.user = response.data;
-              $scope.user = response.data;
-              $scope.user.name = response.data.firstname + " " + response.data.lastname;
-            });
-        }
-      init();
+      // function init() {
+      //     console.log("Home Month Controller loaded");
+      //     $http.get('/api/user')
+      //       .then(function (response) {
+      //         vm.user = response.data;
+      //         $scope.user = response.data;
+      //         $scope.user.name = response.data.firstname + " " + response.data.lastname;
+      //       });
+      //   }
+      // init();
       getMonth();
 
       function getMonth() {
         $http.get('/api/home/m')
-          .success(function (response) {
+          .then(function (response) {
             let data = response;
             console.log(data);
             vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
             console.log("ready to push");
-            for (var time in data.timeseries) {
-              console.log("pushed");
-              chart.data.datasets[0].data.push(data.timeseries[time]);
-              chart.update();
-            }
-            $scope.tax = data.tax;
+            // for (var time in data.timeseries) {
+            //   console.log("pushed");
+            //   chart.data.datasets[0].data.push(data.timeseries[time]);
+            //   chart.update();
+            // }
           })
-          .error(function (err) {
-            console.log("error");
-          })
+          // .error(function (err) {
+          //   console.log("error");
+          // })
       }
 
       function getCurrentMonthAsString() {
@@ -219,9 +218,9 @@
       /**
        * update the chart after the timesToPlot has updated
        */
-      $scope.$watch('timesToPlot', function () {
-        chart.update();
-      })
+      // $scope.$watch('timesToPlot', function () {
+      //   chart.update();
+      // })
       
     }
 
