@@ -66,23 +66,30 @@
     let vm = this;
     vm.getYear = getYear;
 
-    function init() {
-      console.log("Home Year Controller loaded");
+    // function init() {
+    //   console.log("Home Year Controller loaded");
 
-      $http.get('/api/user')
-        .then(function (response) {
-          vm.user = response.data;
-          $scope.user = response.data;
-          $scope.user.name = response.data.firstname + " " + response.data.lastname;
-        })
-    }
-    init();
+    //   $http.get('/api/user')
+    //     .then(function (response) {
+    //       vm.user = response.data;
+    //       $scope.user = response.data;
+    //       $scope.user.name = response.data.firstname + " " + response.data.lastname;
+    //     })
+    // }
+    // init();
     getYear();
 
     function getYear() {
       $http.get('/api/home/y')
         .success(function (response) {
-          console.log(response);
+          let data = response.data;
+          console.log(data);
+          $scope.timesToPlot = data.timeseries;
+
+          vm.income = data.income;
+          vm.tax = data.tax;
+          vm.expenses = data.expenses;
+          vm.net = data.net;
         })
         .error(function (err) {
           console.log("error");
@@ -152,12 +159,12 @@
           .then(function (response) {
             let data = response.data;
             console.log(data);
-            vm.income = data.income;
             $scope.timesToPlot = data.timeseries;
-            console.log("ready to push");
+
             vm.income = data.income;
             vm.tax = data.tax;
-            $scope.tax = data.tax;
+            vm.expenses = data.expenses;
+            vm.net = data.net;
             // for (var time in data.timeseries) {
             //   console.log("pushed");
             //   chart.data.datasets[0].data.push(data.timeseries[time]);
@@ -235,23 +242,30 @@
         let vm = this;
         vm.getYtd = getYtd;
 
-        function init() {
-            console.log("Home YTD Controller loaded");
+        // function init() {
+        //     console.log("Home YTD Controller loaded");
 
-            $http.get('/api/user')
-            .then(function (response) {
-              vm.user = response.data;
-              $scope.user = response.data;
-              $scope.user.name = response.data.firstname + " " + response.data.lastname;
-            })
-        }
-        init();
+        //     $http.get('/api/user')
+        //     .then(function (response) {
+        //       vm.user = response.data;
+        //       $scope.user = response.data;
+        //       $scope.user.name = response.data.firstname + " " + response.data.lastname;
+        //     })
+        // }
+        // init();
         getYtd();
 
       function getYtd() {
         $http.get('/api/home/ytd')
           .success(function (response) {
-            console.log(response);
+            let data = response.data;
+            console.log(data);
+            $scope.timesToPlot = data.timeseries;
+  
+            vm.income = data.income;
+            vm.tax = data.tax;
+            vm.expenses = data.expenses;
+            vm.net = data.net;
           })
           .error(function (err) {
             console.log("error");

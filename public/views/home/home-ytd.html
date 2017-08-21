@@ -21,13 +21,20 @@
     </div>
     <canvas id="ytdChart"></canvas>
     <div class="home-more-info">
-        <small>Deductions</small>
-        <span class="large">$173</span>
+        <small>Total Income</small>
+        <span class="large income">{{model.income}}</span>
     </div>
     <div class="home-more-info">
-        <small>Next Tax Payment</small>
-        <span class="large">$928</span>
-        <small>due on March 28, 2018</small>
+        <small>Expenses Total</small>
+        <span class="large expenses">{{model.expenses}}</span>
+    </div>
+    <div class="home-more-info">
+        <small>Net Total</small>
+        <span class="large net">{{model.net}}</span>
+    </div>
+    <div class="home-more-info">
+        <small>Next Tax Payment Amount</small>
+        <span class="large tax">{{model.tax}}</span>
     </div>
 </section>
 <footer>
