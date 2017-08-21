@@ -147,7 +147,7 @@
           type: 'line',
           // The data for our dataset
           data: {
-            labels: (getCurrentMonthAsString() + " " + daysInThisMonth()),
+            labels: daysInThisMonth(),
             datasets: [{
               label: getCurrentMonthAsString(),
               backgroundColor: 'rgb(175,27,63)',
