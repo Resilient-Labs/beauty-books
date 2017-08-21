@@ -154,11 +154,13 @@
             for (var time in data.timeseries) {
               console.log(data.timeseries[time]);
               chart.data.datasets[0].data.push(data.timeseries[time].v);
+              if (time == data.timeseries.length - 1) {
+                chart.update();
+              }
             }
           })
       }
-      getMonth();
-      chart.update();
+      getMonth(); 
 
       function getCurrentMonthAsString() {
         // want to get the current date and find the month that today is in
