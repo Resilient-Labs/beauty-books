@@ -81,7 +81,7 @@
 
     function getYear() {
       $http.get('/api/home/y')
-        .success(function (response) {
+        .then(function (response) {
           let data = response.data;
           console.log(data);
           $scope.timesToPlot = data.timeseries;
@@ -91,9 +91,9 @@
           vm.expenses = data.expenses;
           vm.net = data.net;
         })
-        .error(function (err) {
-          console.log("error");
-        })
+        // .error(function (err) {
+        //   console.log("error");
+        // })
     }
     var ctx = document.getElementById('yearChart').getContext('2d');
     var chart = new Chart(ctx, {
@@ -257,7 +257,7 @@
 
       function getYtd() {
         $http.get('/api/home/ytd')
-          .success(function (response) {
+          .then(function (response) {
             let data = response.data;
             console.log(data);
             $scope.timesToPlot = data.timeseries;
@@ -267,9 +267,9 @@
             vm.expenses = data.expenses;
             vm.net = data.net;
           })
-          .error(function (err) {
-            console.log("error");
-          })
+          // .error(function (err) {
+          //   console.log("error");
+          // })
       }
 
       var ctx = document.getElementById('ytdChart').getContext('2d');
