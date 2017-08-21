@@ -66,19 +66,6 @@
     let vm = this;
     vm.getYear = getYear;
 
-    // function init() {
-    //   console.log("Home Year Controller loaded");
-
-    //   $http.get('/api/user')
-    //     .then(function (response) {
-    //       vm.user = response.data;
-    //       $scope.user = response.data;
-    //       $scope.user.name = response.data.firstname + " " + response.data.lastname;
-    //     })
-    // }
-    // init();
-    getYear();
-
     function getYear() {
       $http.get('/api/home/y')
         .then(function (response) {
@@ -91,29 +78,29 @@
           vm.expenses = data.expenses;
           vm.net = data.net;
         })
-        // .error(function (err) {
-        //   console.log("error");
-        // })
     }
-    var ctx = document.getElementById('yearChart').getContext('2d');
-    var chart = new Chart(ctx, {
-      // The type of chart we want to create
-      type: 'line',
 
-      // The data for our dataset
-      data: {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        datasets: [{
-          label: "Weekly",
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-      },
+    getYear();
 
-      // Configuration options go here
-      options: {}
-    });
+    // var ctx = document.getElementById('yearChart').getContext('2d');
+    // var chart = new Chart(ctx, {
+    //   // The type of chart we want to create
+    //   type: 'line',
+
+    //   // The data for our dataset
+    //   data: {
+    //     labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    //     datasets: [{
+    //       label: "Weekly",
+    //       backgroundColor: 'rgb(255, 99, 132)',
+    //       borderColor: 'rgb(255, 99, 132)',
+    //       data: [0, 10, 5, 2, 20, 30, 45],
+    //     }]
+    //   },
+
+    //   // Configuration options go here
+    //   options: {}
+    // });
   }
 
     /*
@@ -152,7 +139,6 @@
       //       });
       //   }
       // init();
-      getMonth();
 
       function getMonth() {
         $http.get('/api/home/m')
@@ -171,10 +157,8 @@
             //   chart.update();
             // }
           })
-          // .error(function (err) {
-          //   console.log("error");
-          // })
       }
+      getMonth();
 
       function getCurrentMonthAsString() {
         // want to get the current date and find the month that today is in
@@ -253,7 +237,6 @@
         //     })
         // }
         // init();
-        getYtd();
 
       function getYtd() {
         $http.get('/api/home/ytd')
@@ -267,10 +250,8 @@
             vm.expenses = data.expenses;
             vm.net = data.net;
           })
-          // .error(function (err) {
-          //   console.log("error");
-          // })
       }
+      getYtd();
 
       var ctx = document.getElementById('ytdChart').getContext('2d');
       var chart = new Chart(ctx, {
