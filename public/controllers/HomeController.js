@@ -65,6 +65,25 @@
   function HomeYearController($http, $scope) {
     let vm = this;
     vm.getYear = getYear;
+    var ctx = document.getElementById('yearChart').getContext('2d');
+    var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'line',
+
+      // The data for our dataset
+      data: {
+        labels: [],
+        datasets: [{
+          label: "Yearly",
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: [],
+        }]
+      },
+
+      // Configuration options go here
+      options: {}
+    });
 
     function getYear() {
       $http.get('/api/home/y')
@@ -77,30 +96,18 @@
           vm.tax = data.tax;
           vm.expenses = data.expenses;
           vm.net = data.net;
+
+          for (var time in data.timeseries) {
+            console.log(data.timeseries[time]);
+            chart.data.datasets[0].data.push(data.timeseries[time].v);
+            chart.data.labels.push(data.timeseries[time].t);
+            if (time == data.timeseries.length - 1) {
+              chart.update();
+            }
+          }
         })
     }
-
     getYear();
-
-    // var ctx = document.getElementById('yearChart').getContext('2d');
-    // var chart = new Chart(ctx, {
-    //   // The type of chart we want to create
-    //   type: 'line',
-
-    //   // The data for our dataset
-    //   data: {
-    //     labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    //     datasets: [{
-    //       label: "Weekly",
-    //       backgroundColor: 'rgb(255, 99, 132)',
-    //       borderColor: 'rgb(255, 99, 132)',
-    //       data: [0, 10, 5, 2, 20, 30, 45],
-    //     }]
-    //   },
-
-    //   // Configuration options go here
-    //   options: {}
-    // });
   }
 
     /*
@@ -121,6 +128,7 @@
             datasets: [{
               label: getCurrentMonthAsString(),
               borderColor: 'rgb(155, 29, 112)',
+              backgroundColor: 'transparent',
               data: [],
             }]
           },
@@ -129,23 +137,11 @@
           options: {}
         });
 
-      // function init() {
-      //     console.log("Home Month Controller loaded");
-      //     $http.get('/api/user')
-      //       .then(function (response) {
-      //         vm.user = response.data;
-      //         $scope.user = response.data;
-      //         $scope.user.name = response.data.firstname + " " + response.data.lastname;
-      //       });
-      //   }
-      // init();
-
       function getMonth() {
         $http.get('/api/home/m')
           .then(function (response) {
             let data = response.data;
             console.log(data);
-            $scope.timesToPlot = data.timeseries;
 
             vm.income = data.income;
             vm.tax = data.tax;
@@ -197,26 +193,6 @@
         }
         return daysInThisMonth;
       }
-
-      /**
-       * Find all of the data node values for the month
-       * @returns {Array}
-       */
-      // function findDataNodeInThisMonth() {
-      //   let arr = [];
-      //   console.log("find data node in this month");
-      //   for (let t in $scope.timesToPlot) {
-      //     arr.push($scope.timesToPlot[t].v);
-      //   }
-      //   return arr;
-      // }
-
-      /**
-       * update the chart after the timesToPlot has updated
-       */
-      // $scope.$watch('timesToPlot', function () {
-      //   chart.update();
-      // })
       
     }
 
@@ -227,53 +203,48 @@
     function HomeYTDController($http, $scope) {
         let vm = this;
         vm.getYtd = getYtd;
-
-        // function init() {
-        //     console.log("Home YTD Controller loaded");
-
-        //     $http.get('/api/user')
-        //     .then(function (response) {
-        //       vm.user = response.data;
-        //       $scope.user = response.data;
-        //       $scope.user.name = response.data.firstname + " " + response.data.lastname;
-        //     })
-        // }
-        // init();
+        var ctx = document.getElementById('ytdChart').getContext('2d');
+        var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: 'line',
+  
+          // The data for our dataset
+          data: {
+            labels: [],
+            datasets: [{
+              label: "Yearly",
+              backgroundColor: 'rgb(55, 79, 12)',
+              borderColor: 'rgb(55, 79, 12)',
+              data: [0, 10, 4],
+            }]
+          },
+  
+          // Configuration options go here
+          options: {}
+        });
 
       function getYtd() {
         $http.get('/api/home/ytd')
           .then(function (response) {
             let data = response.data;
             console.log(data);
-            $scope.timesToPlot = data.timeseries;
   
             vm.income = data.income;
             vm.tax = data.tax;
             vm.expenses = data.expenses;
             vm.net = data.net;
+
+            for (var time in data.timeseries) {
+              console.log(data.timeseries[time]);
+              chart.data.datasets[0].data.push(data.timeseries[time].v);
+              chart.data.labels.push(data.timeseries[time].t);
+              if (time == data.timeseries.length - 1) {
+                chart.update();
+              }
+            }
           })
       }
       getYtd();
-
-      var ctx = document.getElementById('ytdChart').getContext('2d');
-      var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-
-        // The data for our dataset
-        data: {
-          labels: ["2015", "2016", "2017"],
-          datasets: [{
-            label: "Yearly",
-            backgroundColor: 'rgb(55, 79, 12)',
-            borderColor: 'rgb(55, 79, 12)',
-            data: [0, 10, 4],
-          }]
-        },
-
-        // Configuration options go here
-        options: {}
-      });
     }
 
 })();
